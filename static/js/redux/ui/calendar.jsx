@@ -268,6 +268,9 @@ class Calendar extends React.Component {
             <PaginationContainer />
           </div>
           <div className="fc-right">
+            <div>
+              <button onClick={this.props.fetchViewerViewLink()}>PLS WORK</button>
+            </div>
             { shareButton }
             { shareLink }
             { addButton }
