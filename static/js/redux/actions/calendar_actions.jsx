@@ -96,22 +96,17 @@ export const fetchAdvisorLink = () => (dispatch, getState) => {
   //   receiveShareLink(shareLink);
   //   return;
   // }
-  fetch(getAddAdvisorEndpoint(), {
+  fetch(getAddAdvisorEndpoint(semester, 'wongandrew97@gmail.com'), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    method: 'POST',
-    body: JSON.stringify({
-      sem_name: semester.name,
-      year: semester.year,
-      name: 'test1',
-      viewer_email: 'k.yim33@gmail.com',
-    }),
+    method: 'GET',
     credentials: 'include',
-  });
-    // .then(response => response.json())
+  })
+    .then(response => response.json())
+      .then(data => console.log(data));
     // .then((ref) => {
     //   dispatch(receiveShareLink(`${window.location.href.split('/')[2]}/timetables/links/${ref.slug}`));
     // });
