@@ -45,8 +45,10 @@ import userAcquisitionModal from './user_acquisition_modal_reducer';
 import textbookModal from './textbook_modal_reducer';
 import finalExamsModal from './final_exams_modal_reducer';
 import entities, * as fromEntities from './entities_reducer';
+import addAdvisorModal from './add_advisor_modal_reducer';
 
 const rootReducer = combineReducers({
+  addAdvisorModal,
   alerts,
   calendar,
   classmates,

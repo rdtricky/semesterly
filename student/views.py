@@ -555,25 +555,3 @@ class ReactionView(ValidateSubdomainMixin, RedirectToSignupMixin, APIView):
         response = {'reactions': course.get_reactions(student=student)}
         return Response(response, status=status.HTTP_200_OK)
 
-class ViewerView(APIView):
-     def post(self, request):
-            name = request.data['name']
-            sem_name = request.data['sem_name']
-            year = request.data['year']
-            viewer_email = request.data['viewer_email']
-
-            semester = Semester.objects.get(name=sem_name, year=year)
-            student = Student.objects.get(user=request.user)
-            school = request.subdomain
-            to_add_viewer = PersonalTimetable.objects.filter(student=student, name=name, school=school, semester=semester)
-            viewer = Student.objects.get(id=1)
-            print(to_add_viewer)
-            print(viewer)
-            if viewer:
-                to_add_viewer.viewers.add(viewer_email)
-                print('Success!')
-                return HttpResponse(status=200)
-            else:
-                # TODO: Send Error message that viewer is not found
-                print('Fail :(')
-                return HttpResponse(status=404)

@@ -149,6 +149,10 @@ const handleFlows = featureFlow => (dispatch) => {
     case 'FINAL_EXAMS':
       dispatch({ type: ActionTypes.SHOW_FINAL_EXAMS_MODAL });
       break;
+    case 'ADD_ADVISOR':
+      console.log('Add Advisor Dispatch');
+      dispatch({ type: ActionTypes.TOGGLE_ADD_ADVISOR_MODAL });
+      break;
     default:
       // unexpected feature name
       break;

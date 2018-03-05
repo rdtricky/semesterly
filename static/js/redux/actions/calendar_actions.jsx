@@ -20,7 +20,6 @@ import {
     getLogiCalEndpoint,
     getRequestShareTimetableLinkEndpoint,
     getCourseShareLink,
-    getViewerViewEndpoint,
 } from '../constants/endpoints';
 import { FULL_WEEK_LIST } from '../constants/constants';
 import {
@@ -82,39 +81,6 @@ export const fetchShareTimetableLink = () => (dispatch, getState) => {
         .then((ref) => {
           dispatch(receiveShareLink(`${window.location.href.split('/')[2]}/timetables/links/${ref.slug}`));
         });
-};
-
-export const fetchViewerViewLink = () => (dispatch, getState) => {
-  const state = getState();
-
-  const semester = getCurrentSemester(state);
-  // const { shareLink, shareLinkValid } = state.calendar;
-  // dispatch({
-  //   type: ActionTypes.REQUEST_SHARE_TIMETABLE_LINK,
-  // });
-  // if (shareLinkValid) {
-  //   receiveShareLink(shareLink);
-  //   return;
-  // }
-  fetch(getViewerViewEndpoint(), {
-    headers: {
-      'X-CSRFToken': Cookie.get('csrftoken'),
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      sem_name: semester.name,
-      year: semester.year,
-      name: 'test1',
-      viewer_email: 'k.yim33@gmail.com',
-    }),
-    credentials: 'include',
-  });
-    // .then(response => response.json())
-    // .then((ref) => {
-    //   dispatch(receiveShareLink(`${window.location.href.split('/')[2]}/timetables/links/${ref.slug}`));
-    // });
 };
 
 export const addTTtoGCal = () => (dispatch, getState) => {

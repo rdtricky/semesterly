@@ -38,8 +38,5 @@ urlpatterns = patterns('',
                        # for accepting TOS.
                        url(r'^tos/accept/', 'student.views.accept_tos'),
 
-                       # viewer management
-                       url(r'^addViewer/$',
-                                               student.views.ViewerView.as_view()),
                        )
 
