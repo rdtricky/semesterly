@@ -7,6 +7,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
         # viewer management
-       url(r'^addViewer/$',
+       url(r'^addAdvisor/$',
                                advisor.views.AdvisorView.as_view()),
        )

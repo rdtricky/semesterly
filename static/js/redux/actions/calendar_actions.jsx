@@ -20,7 +20,7 @@ import {
     getLogiCalEndpoint,
     getRequestShareTimetableLinkEndpoint,
     getCourseShareLink,
-    getViewerViewEndpoint,
+    getAddAdvisorEndpoint,
 } from '../constants/endpoints';
 import { FULL_WEEK_LIST } from '../constants/constants';
 import {
@@ -84,7 +84,7 @@ export const fetchShareTimetableLink = () => (dispatch, getState) => {
         });
 };
 
-export const fetchViewerViewLink = () => (dispatch, getState) => {
+export const fetchAdvisorLink = () => (dispatch, getState) => {
   const state = getState();
 
   const semester = getCurrentSemester(state);
@@ -96,7 +96,7 @@ export const fetchViewerViewLink = () => (dispatch, getState) => {
   //   receiveShareLink(shareLink);
   //   return;
   // }
-  fetch(getViewerViewEndpoint(), {
+  fetch(getAddAdvisorEndpoint(), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
       Accept: 'application/json',

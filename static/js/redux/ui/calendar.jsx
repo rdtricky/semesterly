@@ -269,7 +269,7 @@ class Calendar extends React.Component {
           </div>
           <div className="fc-right">
             <div>
-              <button onClick={this.props.fetchViewerViewLink()}>PLS WORK</button>
+              <button onClick={this.props.fetchAdvisorLink()}>PLS WORK</button>
             </div>
             { shareButton }
             { shareLink }
