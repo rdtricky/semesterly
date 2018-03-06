@@ -143,6 +143,27 @@ class Calendar extends React.Component {
     const saveIcon = this.props.saving ? <i className="fa fa-spin fa-circle-o-notch" /> :
     <i className="fa fa-floppy-o" />;
 
+    const addAdvisorButton = (
+      <div className="cal-btn-wrapper">
+        <button
+          onClick={() => this.props.toggleAddAdvisorModal()}
+          className="save-timetable"
+          data-tip
+          data-for="add-advisor-btn-tooltip"
+        >
+          <i className="fa fa-user-plus" />
+        </button>
+        <ReactTooltip
+          id="add-advisor-btn-tooltip"
+          class="tooltip"
+          type="dark"
+          place="bottom"
+          effect="solid"
+        >
+          <span>Add Advisor</span>
+        </ReactTooltip>
+      </div>
+    );
     const shareButton = (
       <div className="cal-btn-wrapper">
         <button
@@ -268,9 +289,7 @@ class Calendar extends React.Component {
             <PaginationContainer />
           </div>
           <div className="fc-right">
-            <div>
-              <button onClick={() => this.props.toggleAddAdvisorModal()}>PLS WORK</button>
-            </div>
+            { addAdvisorButton }
             { shareButton }
             { shareLink }
             { addButton }
@@ -391,6 +410,7 @@ Calendar.propTypes = {
   saving: PropTypes.bool.isRequired,
   shareLink: PropTypes.string,
   uses12HrTime: PropTypes.bool.isRequired,
+  toggleAddAdvisorModal: PropTypes.func.isRequired,
 };
 
 export default Calendar;
