@@ -60,7 +60,16 @@ class AddAdvisorModal extends React.Component {
       >
         {modalHeader}
         <div className="add-advisor-modal__container">
-          <p>Add Advisor Modal Stuff</p>
+          <div className="search-bar__input-wrapper">
+            <input
+              ref={(c) => { this.input = c; }}
+              placeholder={`Search for an Advisor`}
+              // className={this.props.isFetching ? 'results-loading-gif' : ''}
+              // onInput={this.fetchSearchResults}
+              // onFocus={() => this.setState({ focused: true, showDropdown: false })}
+              // onBlur={() => this.setState({ focused: false })}
+            />
+          </div>
         </div>
       </Modal>
     );
