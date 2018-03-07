@@ -18,6 +18,20 @@ import Modal from 'boron/WaveModal';
 import * as SemesterlyPropTypes from '../../constants/semesterlyPropTypes';
 
 class AddAdvisorModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: '',
+    };
+    this.searchForAdvisor = this.searchForAdvisor.bind(this);
+    // this.toggleDropdown = this.toggleDropdown.bind(this);
+    // this.fetchSearchResults = this.fetchSearchResults.bind(this);
+    // SearchBar.getAbbreviatedSemesterName = SearchBar.getAbbreviatedSemesterName.bind(this);
+    // this.onClickOut = this.onClickOut.bind(this);
+    // this.toggleDropdown = this.toggleDropdown.bind(this);
+    // this.changeTimer = false;
+  }
+
   componentDidMount() {
     if (this.props.isVisible) {
       this.modal.show();
@@ -30,14 +44,18 @@ class AddAdvisorModal extends React.Component {
     }
   }
 
+  searchForAdvisor() {
+    //
+  }
   render() {
     const modalHeader =
       (<div className="modal-content">
         <div className="modal-header">
           <div
-            className="header-pic"
-            style={{ backgroundImage: 'url(/static/img/addtocalendarfeature.png)' }}
-          />
+            className="header-pic add-advisor-header-icon"
+          >
+            <i className="fa fa-user-plus" />
+          </div>
           <h1>Add Advisor</h1>
           <div className="modal-close" onClick={() => this.modal.hide()}>
             <i className="fa fa-times" />
@@ -64,11 +82,19 @@ class AddAdvisorModal extends React.Component {
             <input
               ref={(c) => { this.input = c; }}
               placeholder={`Search for an Advisor`}
+              value={this.state.input}
               // className={this.props.isFetching ? 'results-loading-gif' : ''}
-              // onInput={this.fetchSearchResults}
+              onInput={e => this.setState({ input: e.target.value })}
               // onFocus={() => this.setState({ focused: true, showDropdown: false })}
               // onBlur={() => this.setState({ focused: false })}
             />
+            <button
+              className="btn btn-primary"
+              style={{ marginLeft: 'auto', marginRight: '10%' }}
+              onClick={this.searchForAdvisor()}
+            >
+              Search
+            </button>
           </div>
         </div>
       </Modal>
