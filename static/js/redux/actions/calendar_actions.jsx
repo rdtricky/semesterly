@@ -87,6 +87,8 @@ export const fetchShareTimetableLink = () => (dispatch, getState) => {
 export const fetchAdvisorLink = () => (dispatch, getState) => {
   const state = getState();
 
+  const timetableId = getActiveTimetable(state).id;
+
   const semester = getCurrentSemester(state);
   // const { shareLink, shareLinkValid } = state.calendar;
   // dispatch({
@@ -96,20 +98,23 @@ export const fetchAdvisorLink = () => (dispatch, getState) => {
   //   receiveShareLink(shareLink);
   //   return;
   // }
-  fetch(getAddAdvisorEndpoint(semester, 'wongandrew97@gmail.com'), {
+  fetch(getAddAdvisorEndpoint(), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    method: 'GET',
+    method: 'POST',
     credentials: 'include',
+    body: JSON.stringify({
+      tt_id: timetableId,
+      sem_name: semester.name,
+      sem_year: semester.year,
+      advisor_email: 'wongandrew97@gmail.com',
+    }),
   })
     .then(response => response.json())
       .then(data => console.log(data));
-    // .then((ref) => {
-    //   dispatch(receiveShareLink(`${window.location.href.split('/')[2]}/timetables/links/${ref.slug}`));
-    // });
 };
 
 export const addTTtoGCal = () => (dispatch, getState) => {

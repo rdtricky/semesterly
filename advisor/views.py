@@ -11,6 +11,7 @@
 # GNU General Public License for more details.
 
 from student.models import Student, PersonalTimetable
+from student.utils import get_student
 from student.serializers import get_student_dict
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -19,41 +20,26 @@ from django.contrib.auth.models import User
 
 
 class AdvisorView(APIView):
-    def get(self, request, sem_name, sem_year, email):
-        """
-        Search an advisor by email.
-        Return student advisor user object if valid email, else return 404
-        """
+    def post(self, request):
+        """ Add an advisor by email """
         try:
-            student = User.objects.filter(email=email)[0]
+            tt_id = request.data['tt_id']
+            sem_name = request.data['sem_name']
+            sem_year = request.data['sem_year']
+            advisor_email = request.data['advisor_email']
 
+            student = get_student(request)
             semester = Semester.objects.get(name=sem_name, year=sem_year)
-            response = {
-                'student': student.email  # handles if not student too
-            }
-            # if advisor not found, empty
-            return Response(response, status=200)
-        except KeyError:
-            return HttpResponse(status=404)  # malformed request
+            school = request.subdomain
 
-    # def post(self, request):
-    #         name = request.data['name']
-    #         sem_name = request.data['sem_name']
-    #         year = request.data['year']
-    #         viewer_email = request.data['viewer_email']
-    #
-    #         semester = Semester.objects.get(name=sem_name, year=year)
-    #         student = Student.objects.get(user=request.user)
-    #         school = request.subdomain
-    #         to_add_viewer = PersonalTimetable.objects.filter(student=student, name=name, school=school, semester=semester)
-    #         viewer = Student.objects.get(id=1)
-    #         print(to_add_viewer)
-    #         print(viewer)
-    #         if viewer:
-    #             to_add_viewer.viewers.add(viewer_email)
-    #             print('Success!')
-    #             return HttpResponse(status=200)
-    #         else:
-    #             # TODO: Send Error message that viewer is not found
-    #             print('Fail :(')
-    #             return HttpResponse(status=404)
+            output = []
+            advisors_list = list(User.objects.filter(email=advisor_email))
+            for advisor in advisors_list:
+                timetable = PersonalTimetable.objects.get(student=student, pk=tt_id, school=school, semester=semester)
+                if timetable:
+                    advisor_obj = Student.objects.get(user=advisor)
+                    timetable.advisors.add(advisor_obj)
+                    output.append(get_student_dict(school, advisor_obj, semester))
+            return Response({'advisors_added': output}, status=200)
+        except KeyError:
+            return Response({'reason': 'incorrect request format'}, status=404)
