@@ -14,19 +14,19 @@ GNU General Public License for more details.
 
 import * as ActionTypes from '../constants/actionTypes';
 
-const addAdvisorModal = (state = {
+const addAdvisorModal = (state =  {
   isVisible: false,
   isLoading: false,
-  data: '',
-  advisorExists: false,
+  hasLoaded: false,
+  data: 'empty',
 }, action) => {
   switch (action.type) {
     case ActionTypes.TOGGLE_ADD_ADVISOR_MODAL:
-      return { isVisible: !state.isVisible };
+      return Object.assign({}, state, { isVisible: !state.isVisible });
     case ActionTypes.LOAD_ADVISOR:
-      return { isLoading: true };
+      return Object.assign({}, state, { isLoading: true });
     case ActionTypes.ADVISOR_LOADED:
-      return { data: action.data, isLoading: false };
+      return Object.assign({}, state, { hasLoaded: true, data: action.data });
     default:
       return state;
   }

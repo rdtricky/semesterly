@@ -20,8 +20,8 @@ import { fetchAdvisorLink } from '../../../actions/calendar_actions';
 const mapStateToProps = state => ({
   isVisible: state.addAdvisorModal.isVisible,
   isLoading: state.addAdvisorModal.isLoading,
+  hasLoaded: state.addAdvisorModal.hasLoaded,
   data: state.addAdvisorModal.data,
-  advisorExists: state.addAdvisorModal.advisorExists,
 });
 
 const AddAdvisorModalContainer = connect(
