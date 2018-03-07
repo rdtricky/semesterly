@@ -1,9 +1,12 @@
-from django.conf.urls import url
+from django.conf.urls import patterns, url
+from django.contrib import admin
 
-from . import views
-from helpers.mixins import FeatureFlowView
+import advisor.views
 
-urlpatterns = [
-    # url('', views.index, name='^add_advisor/*$'),
-    url(r'^add_advisor/*$', FeatureFlowView.as_view(feature_name='ADD_ADVISOR')),
-]
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    # viewer management
+        url(r'^addAdvisor/$', advisor.views.AdvisorView.as_view()),
+#     url(r'^add_advisor/*$', FeatureFlowView.as_view(feature_name='ADD_ADVISOR')),
+)

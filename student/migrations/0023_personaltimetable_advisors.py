@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='personaltimetable',
-            name='viewers',
-            field=models.ManyToManyField(related_name='Viewers', to='student.Student'),
+            name='advisors',
+            field=models.ManyToManyField(related_name='Advisors', to='student.Student'),
         ),
     ]
