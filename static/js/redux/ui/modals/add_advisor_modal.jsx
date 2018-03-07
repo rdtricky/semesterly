@@ -22,6 +22,7 @@ class AddAdvisorModal extends React.Component {
     super(props);
     this.state = {
       input: '',
+      advisorExists: false,
     };
     this.searchForAdvisor = this.searchForAdvisor.bind(this);
     // this.toggleDropdown = this.toggleDropdown.bind(this);
@@ -67,7 +68,7 @@ class AddAdvisorModal extends React.Component {
       width: '100%',
     };
     console.log(this.props.isLoading);
-    console.log(this.props.data);
+    console.log(this.props.data !== undefined ? this.props.data[1] : 'undefined');
     return (
       <Modal
         ref={(c) => { this.modal = c; }}
@@ -97,7 +98,7 @@ class AddAdvisorModal extends React.Component {
             >
               Search
             </button>
-            <p>{ 'heelo' + this.props.data }</p>
+            {/*<p>{this.props.data !== undefined ? JSON.parse(this.props.data).userLastName : ''}</p>*/}
           </div>
         </div>
       </Modal>
