@@ -20,6 +20,7 @@ import {
     getLogiCalEndpoint,
     getRequestShareTimetableLinkEndpoint,
     getCourseShareLink,
+    getAddAdvisorEndpoint,
 } from '../constants/endpoints';
 import { FULL_WEEK_LIST } from '../constants/constants';
 import {
@@ -83,7 +84,7 @@ export const fetchShareTimetableLink = () => (dispatch, getState) => {
         });
 };
 
-export const fetchAdvisorLink = () => (dispatch, getState) => {
+export const fetchAdvisorLink = (email) => (dispatch, getState) => {
   const state = getState();
 
   const timetableId = getActiveTimetable(state).id;
@@ -109,7 +110,7 @@ export const fetchAdvisorLink = () => (dispatch, getState) => {
       tt_id: timetableId,
       sem_name: semester.name,
       sem_year: semester.year,
-      advisor_email: 'wongandrew97@gmail.com',
+      advisor_email: email,
     }),
   })
     .then(response => response.json())

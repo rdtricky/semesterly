@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import AddAdvisorModal from '../../modals/add_advisor_modal';
 //import { addTTtoGCal, createICalFromTimetable } from '../../../actions/calendar_actions';
 import { toggleAddAdvisorModal } from '../../../actions/modal_actions';
+import { fetchAdvisorLink } from '../../../actions/calendar_actions';
 
 const mapStateToProps = state => ({
   isVisible: state.addAdvisorModal.isVisible,
@@ -25,6 +26,7 @@ const AddAdvisorModalContainer = connect(
   mapStateToProps,
   {
     toggleAddAdvisorModal,
+    fetchAdvisorLink,
   },
 )(AddAdvisorModal);
 
