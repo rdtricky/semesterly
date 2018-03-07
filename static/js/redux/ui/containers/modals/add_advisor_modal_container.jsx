@@ -15,11 +15,13 @@ GNU General Public License for more details.
 import { connect } from 'react-redux';
 import AddAdvisorModal from '../../modals/add_advisor_modal';
 //import { addTTtoGCal, createICalFromTimetable } from '../../../actions/calendar_actions';
-import { toggleAddAdvisorModal } from '../../../actions/modal_actions';
+import { toggleAddAdvisorModal, loadAdvisor } from '../../../actions/modal_actions';
 import { fetchAdvisorLink } from '../../../actions/calendar_actions';
 
 const mapStateToProps = state => ({
   isVisible: state.addAdvisorModal.isVisible,
+  isLoading: state.addAdvisorModal.isLoading,
+  data: state.addAdvisorModal.data,
 });
 
 const AddAdvisorModalContainer = connect(
@@ -27,6 +29,7 @@ const AddAdvisorModalContainer = connect(
   {
     toggleAddAdvisorModal,
     fetchAdvisorLink,
+    loadAdvisor,
   },
 )(AddAdvisorModal);
 

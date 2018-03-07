@@ -14,6 +14,9 @@ GNU General Public License for more details.
 
 // ADD ADVISOR MODAL
 export const TOGGLE_ADD_ADVISOR_MODAL = 'TOGGLE_ADD_ADVISOR_MODAL';
+export const ADVISOR_LOADED = 'ADVISOR_LOADED';
+export const LOAD_ADVISOR = 'LOAD_ADVISOR';
+export const ADVISOR_RESULT = 'ADVISOR_RESULT';
 
 // ALERTS
 export const ALERT_CONFLICT = 'ALERT_CONFLICT';

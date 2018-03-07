@@ -22,7 +22,6 @@ class AddAdvisorModal extends React.Component {
     super(props);
     this.state = {
       input: '',
-      isLoading: false,
     };
     this.searchForAdvisor = this.searchForAdvisor.bind(this);
     // this.toggleDropdown = this.toggleDropdown.bind(this);
@@ -45,10 +44,9 @@ class AddAdvisorModal extends React.Component {
     }
   }
   searchForAdvisor() {
+    this.props.loadAdvisor();
     this.props.fetchAdvisorLink(this.state.input);
-    this.setState({ isLoading: true });
   }
-
 
   render() {
     const modalHeader =
@@ -68,7 +66,8 @@ class AddAdvisorModal extends React.Component {
     const modalStyle = {
       width: '100%',
     };
-
+    console.log(this.props.isLoading);
+    console.log(this.props.data);
     return (
       <Modal
         ref={(c) => { this.modal = c; }}
@@ -86,7 +85,7 @@ class AddAdvisorModal extends React.Component {
               ref={(c) => { this.input = c; }}
               placeholder={`Search for an Advisor`}
               value={this.state.input}
-              className={this.state.isLoading ? 'results-loading-gif' : ''}
+              className={this.props.isLoading ? 'results-loading-gif' : ''}
               onInput={e => this.setState({ input: e.target.value })}
               // onFocus={() => this.setState({ focused: true, showDropdown: false })}
               // onBlur={() => this.setState({ focused: false })}
@@ -98,6 +97,7 @@ class AddAdvisorModal extends React.Component {
             >
               Search
             </button>
+            <p>{ 'heelo' + this.props.data }</p>
           </div>
         </div>
       </Modal>
