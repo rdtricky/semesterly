@@ -20,6 +20,7 @@ import {
     getLogiCalEndpoint,
     getRequestShareTimetableLinkEndpoint,
     getCourseShareLink,
+    getAddAdvisorEndpoint,
 } from '../constants/endpoints';
 import { FULL_WEEK_LIST } from '../constants/constants';
 import {
@@ -81,6 +82,45 @@ export const fetchShareTimetableLink = () => (dispatch, getState) => {
         .then((ref) => {
           dispatch(receiveShareLink(`${window.location.href.split('/')[2]}/timetables/links/${ref.slug}`));
         });
+};
+
+export const fetchAdvisorLink = (email) => (dispatch, getState) => {
+  const state = getState();
+
+  const timetableId = getActiveTimetable(state).id;
+
+  const semester = getCurrentSemester(state);
+  // const { shareLink, shareLinkValid } = state.calendar;
+  // dispatch({
+  //   type: ActionTypes.REQUEST_SHARE_TIMETABLE_LINK,
+  // });
+  // if (shareLinkValid) {
+  //   receiveShareLink(shareLink);
+  //   return;
+  // }
+  fetch(getAddAdvisorEndpoint(), {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({
+      tt_id: timetableId,
+      sem_name: semester.name,
+      sem_year: semester.year,
+      advisor_email: email,
+    }),
+  })
+    .then(response => response.json())
+      .then((data) => {
+        console.log(data);
+        dispatch({
+          type: ActionTypes.ADVISOR_RESULT,
+          data,
+        });
+      });
 };
 
 export const addTTtoGCal = () => (dispatch, getState) => {

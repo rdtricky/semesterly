@@ -118,6 +118,10 @@ export const triggerTextbookModal = () => ({ type: ActionTypes.TRIGGER_TEXTBOOK_
 
 export const showFinalExamsModal = () => ({ type: ActionTypes.SHOW_FINAL_EXAMS_MODAL });
 
+export const toggleAddAdvisorModal = () => ({ type: ActionTypes.TOGGLE_ADD_ADVISOR_MODAL });
+
+export const loadAdvisor = () => ({ type: ActionTypes.LOAD_ADVISOR });
+
 export const overrideSettingsShow = data => ({
   type: ActionTypes.OVERRIDE_SETTINGS_SHOW,
   data,
