@@ -40,6 +40,7 @@ class AddAdvisorModal extends React.Component {
   searchForAdvisor() {
     this.props.loadAdvisor();
     this.props.fetchAdvisorLink(this.state.input);
+    this.state.input = '';
   }
 
   render() {
