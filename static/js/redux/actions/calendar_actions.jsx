@@ -20,6 +20,7 @@ import {
     getLogiCalEndpoint,
     getRequestShareTimetableLinkEndpoint,
     getCourseShareLink,
+    getAddAdvisorEndpoint,
 } from '../constants/endpoints';
 import { FULL_WEEK_LIST } from '../constants/constants';
 import {
@@ -83,6 +84,7 @@ export const fetchShareTimetableLink = () => (dispatch, getState) => {
         });
 };
 
+<<<<<<< HEAD
 export const fetchSISTimetableData = () => {
   return (dispatch, getState) => {
     const state = getState();
@@ -105,8 +107,49 @@ export const fetchSISTimetableData = () => {
 };
 
 export const addTTtoGCal = () => (dispatch, getState) => {
+=======
+export const fetchAdvisorLink = (email) => (dispatch, getState) => {
+>>>>>>> 4b663a79735a62bdbcdc61e012c8aa115fe7c1fe
   const state = getState();
 
+  const timetableId = getActiveTimetable(state).id;
+
+  const semester = getCurrentSemester(state);
+  // const { shareLink, shareLinkValid } = state.calendar;
+  // dispatch({
+  //   type: ActionTypes.REQUEST_SHARE_TIMETABLE_LINK,
+  // });
+  // if (shareLinkValid) {
+  //   receiveShareLink(shareLink);
+  //   return;
+  // }
+  fetch(getAddAdvisorEndpoint(), {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({
+      tt_id: timetableId,
+      sem_name: semester.name,
+      sem_year: semester.year,
+      advisor_email: email,
+    }),
+  })
+    .then(response => response.json())
+      .then((data) => {
+        console.log(data);
+        dispatch({
+          type: ActionTypes.ADVISOR_LOADED,
+          data,
+        });
+      });
+};
+
+export const addTTtoGCal = () => (dispatch, getState) => {
+  const state = getState();
   if (!state.saveCalendarModal.isUploading && !state.saveCalendarModal.hasUploaded) {
     dispatch({ type: ActionTypes.UPLOAD_CALENDAR });
     fetch(getAddTTtoGCalEndpoint(), {
@@ -127,6 +170,27 @@ export const addTTtoGCal = () => (dispatch, getState) => {
         dispatch({ type: ActionTypes.CALENDAR_UPLOADED });
       });
   }
+};
+
+export const fetchSISTimetableData = () => {
+  return (dispatch, getState) => {
+    const state = getState();
+    const tt = getActiveDenormTimetable(state);
+    const sem = getCurrentSemester(state);
+    const sections = tt.slots.map(slot => (
+      {course: slot.course.code, section: slot.section.meeting_section.replace('(', '').replace(')', '')}
+    ));
+    const sisData = {
+      action: 'AddToCart',
+      data: {
+        year: sem.year,
+        term: sem.name,
+        sections,
+      },
+    };
+    dispatch({type: ActionTypes.EXPORT_SIS_TIMETABLE});
+    return sisData;
+  };
 };
 
 export const createICalFromTimetable = () => (dispatch, getState) => {

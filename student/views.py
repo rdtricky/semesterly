@@ -455,7 +455,7 @@ class GCalView(RedirectToSignupMixin, APIView):
         student = Student.objects.get(user=request.user)
         tt = request.data['timetable']
         credentials = student.get_google_credentials() # assumes is not None
-        http = credentials.authorize(httplib2.Http(timeout=100000000))
+        http = credentials.authorize(httplib2.Http())
         service = discovery.build('calendar', 'v3', http=http)
         school = request.subdomain
 
@@ -472,6 +472,7 @@ class GCalView(RedirectToSignupMixin, APIView):
         semester_name = request.data['semester']['name']
         semester_year = int(request.data['semester']['year'])
         if semester_name == 'Fall':
+<<<<<<< HEAD
             # ignore year, year is set to current year
             sem_start = datetime(semester_year, 8, 30, 17, 0, 0)
             sem_end = datetime(semester_year, 12, 20, 17, 0, 0)
@@ -479,6 +480,19 @@ class GCalView(RedirectToSignupMixin, APIView):
             # ignore year, year is set to current year
             sem_start = datetime(semester_year, 1, 30, 17, 0, 0)
             sem_end = datetime(semester_year, 5, 5, 17, 0, 0)
+=======
+            sem_start = datetime(semester_year, 8, 30, 17, 0, 0)
+            sem_end = datetime(semester_year, 12, 20, 17, 0, 0)
+        elif semester_name == 'Intersession':
+            sem_start = datetime(semester_year, 1, 2, 17, 0, 0)
+            sem_end = datetime(semester_year, 1, 20, 17, 0, 0)
+        elif semester_name == 'Spring':
+            sem_start = datetime(semester_year, 1, 22, 17, 0, 0)
+            sem_end = datetime(semester_year, 5, 5, 17, 0, 0)
+        else:
+            sem_start = datetime(semester_year, 6, 25, 17, 0, 0)
+            sem_end = datatime(semester_year, 8, 3, 17, 0, 0)
+>>>>>>> 4b663a79735a62bdbcdc61e012c8aa115fe7c1fe
 
         # add events
         for slot in tt['slots']:
@@ -555,3 +569,4 @@ class ReactionView(ValidateSubdomainMixin, RedirectToSignupMixin, APIView):
 
         response = {'reactions': course.get_reactions(student=student)}
         return Response(response, status=status.HTTP_200_OK)
+

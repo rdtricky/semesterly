@@ -140,6 +140,10 @@ class Calendar extends React.Component {
   render() {
     const saveIcon = this.props.saving ? <i className="fa fa-spin fa-circle-o-notch" /> :
     <i className="fa fa-floppy-o" />;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4b663a79735a62bdbcdc61e012c8aa115fe7c1fe
     const sis = 'https://sis.jhu.edu/sswf/go/';
     const addSISButton = this.props.registrarSupported ? (
       <div className="cal-btn-wrapper">
@@ -156,7 +160,11 @@ class Calendar extends React.Component {
           />
         </form>
         <button
+<<<<<<< HEAD
           type="submit"
+=======
+          type="sumbit"
+>>>>>>> 4b663a79735a62bdbcdc61e012c8aa115fe7c1fe
           form="form1"
           className="save-timetable add-button"
           data-for="sis-btn-tooltip"
@@ -165,16 +173,43 @@ class Calendar extends React.Component {
           <img src="/static/img/addtosis.png" alt="SIS" style={{ marginTop: '2px' }} />
         </button>
         <ReactTooltip
+<<<<<<< HEAD
           id="sis-btn-tooltip"
+=======
+          id="sis-btn-tooltip">
+        <span>SIS Add to Cart</span>
+        </ReactTooltip>
+  </div>
+  ) : null;
+    const addAdvisorButton = (
+      <div className="cal-btn-wrapper">
+        <button
+          onClick={() => this.props.toggleAddAdvisorModal()}
+          className="save-timetable"
+          data-tip
+          data-for="add-advisor-btn-tooltip"
+        >
+          <i className="fa fa-user-plus" />
+        </button>
+        <ReactTooltip
+          id="add-advisor-btn-tooltip"
+>>>>>>> 4b663a79735a62bdbcdc61e012c8aa115fe7c1fe
           class="tooltip"
           type="dark"
           place="bottom"
           effect="solid"
         >
+<<<<<<< HEAD
           <span>SIS Add to Cart</span>
         </ReactTooltip>
       </div>
     ) : null;
+=======
+          <span>Add Advisor</span>
+        </ReactTooltip>
+      </div>
+    );
+>>>>>>> 4b663a79735a62bdbcdc61e012c8aa115fe7c1fe
     const shareButton = (
       <div className="cal-btn-wrapper">
         <button
@@ -289,7 +324,7 @@ class Calendar extends React.Component {
           place="bottom"
           effect="solid"
         >
-          <span>Preferences</span>
+            <span>Preferences</span>
         </ReactTooltip>
       </div>
         );
@@ -301,6 +336,10 @@ class Calendar extends React.Component {
           </div>
           <div className="fc-right">
             { addSISButton }
+<<<<<<< HEAD
+=======
+            { addAdvisorButton }
+>>>>>>> 4b663a79735a62bdbcdc61e012c8aa115fe7c1fe
             { shareButton }
             { shareLink }
             { addButton }
@@ -423,6 +462,10 @@ Calendar.propTypes = {
   shareLink: PropTypes.string,
   uses12HrTime: PropTypes.bool.isRequired,
   registrarSupported: PropTypes.bool.isRequired,
+<<<<<<< HEAD
+=======
+  toggleAddAdvisorModal: PropTypes.func.isRequired,
+>>>>>>> 4b663a79735a62bdbcdc61e012c8aa115fe7c1fe
 };
 
 export default Calendar;
