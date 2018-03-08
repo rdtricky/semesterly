@@ -66,7 +66,7 @@ class AddAdvisorModal extends React.Component {
     if (this.props.hasLoaded) {
       if (this.props.data.advisors_added.length > 0) {
         this.state.advisor = this.props.data.advisors_added[0];
-        SearchText = (this.state.advisor.userFirstName) + ' ' + (this.state.advisor.userLastName) + ' is now an advisor to your timetable';
+        SearchText = (this.state.advisor.userFirstName) + ' ' + (this.state.advisor.userLastName) + ' is now an advisor to ' + (this.props.currentTimetable);
       } else {
         SearchText = 'Advisor was not found';
       }

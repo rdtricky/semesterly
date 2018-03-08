@@ -17,12 +17,15 @@ import AddAdvisorModal from '../../modals/add_advisor_modal';
 import { toggleAddAdvisorModal, loadAdvisor } from '../../../actions/modal_actions';
 import { fetchAdvisorLink } from '../../../actions/calendar_actions';
 
-const mapStateToProps = state => ({
-  isVisible: state.addAdvisorModal.isVisible,
-  isLoading: state.addAdvisorModal.isLoading,
-  hasLoaded: state.addAdvisorModal.hasLoaded,
-  data: state.addAdvisorModal.data,
-});
+const mapStateToProps = (state) => {
+  return {
+    isVisible: state.addAdvisorModal.isVisible,
+    isLoading: state.addAdvisorModal.isLoading,
+    hasLoaded: state.addAdvisorModal.hasLoaded,
+    data: state.addAdvisorModal.data,
+    currentTimetable: state.savingTimetable.activeTimetable.name,
+  };
+};
 
 const AddAdvisorModalContainer = connect(
   mapStateToProps,
