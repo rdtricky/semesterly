@@ -67,8 +67,6 @@ class AddAdvisorModal extends React.Component {
     const modalStyle = {
       width: '100%',
     };
-    console.log(this.props.data !== 'empty' ? this.props.data.advisors_added.length : 'data is undefined');
-
     let SearchText = '';
     SearchText = this.props.isLoading ? 'One Moment...' : SearchText;
     if (this.props.hasLoaded) {

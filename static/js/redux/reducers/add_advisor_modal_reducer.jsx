@@ -18,9 +18,16 @@ const addAdvisorModal = (state =  {
   isVisible: false,
   isLoading: false,
   hasLoaded: false,
-  data: 'empty',
+  data: '',
 }, action) => {
   switch (action.type) {
+    case ActionTypes.TRIGGER_ADD_ADVISOR_MODAL:
+      return Object.assign({}, {
+        isVisible: true,
+        isLoading: false,
+        hasLoaded: false,
+        data: '',
+      });
     case ActionTypes.TOGGLE_ADD_ADVISOR_MODAL:
       return Object.assign({}, state, { isVisible: !state.isVisible });
     case ActionTypes.LOAD_ADVISOR:
