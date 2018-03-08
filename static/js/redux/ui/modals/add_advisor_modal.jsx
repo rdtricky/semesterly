@@ -76,7 +76,7 @@ class AddAdvisorModal extends React.Component {
         className="add-advisor-modal abnb-modal max-modal"
         modalStyle={modalStyle}
         onHide={() => {
-          this.props.toggleAddAdvisorModal();
+          this.props.hideAddAdvisorModal();
           history.replaceState({}, 'Semester.ly', '/');
         }}
       >
@@ -106,7 +106,7 @@ class AddAdvisorModal extends React.Component {
 }
 
 AddAdvisorModal.propTypes = {
-  toggleAddAdvisorModal: PropTypes.func.isRequired,
+  hideAddAdvisorModal: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   hasLoaded: PropTypes.bool.isRequired,

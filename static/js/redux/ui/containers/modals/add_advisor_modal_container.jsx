@@ -14,7 +14,7 @@ GNU General Public License for more details.
 
 import { connect } from 'react-redux';
 import AddAdvisorModal from '../../modals/add_advisor_modal';
-import { toggleAddAdvisorModal, loadAdvisor } from '../../../actions/modal_actions';
+import { triggerAddAdvisorModal, hideAddAdvisorModal, loadAdvisor } from '../../../actions/modal_actions';
 import { fetchAdvisorLink } from '../../../actions/calendar_actions';
 
 const mapStateToProps = state => ({
@@ -27,7 +27,8 @@ const mapStateToProps = state => ({
 const AddAdvisorModalContainer = connect(
   mapStateToProps,
   {
-    toggleAddAdvisorModal,
+    triggerAddAdvisorModal,
+    hideAddAdvisorModal,
     fetchAdvisorLink,
     loadAdvisor,
   },
