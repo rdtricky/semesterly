@@ -60,17 +60,41 @@ class AddAdvisorModal extends React.Component {
     const modalStyle = {
       width: '100%',
     };
-
     let SearchText = '';
     SearchText = this.props.isLoading ? 'One Moment...' : SearchText;
     if (this.props.hasLoaded) {
       if (this.props.data.advisors_added.length > 0) {
         this.state.advisor = this.props.data.advisors_added[0];
-        SearchText = (this.state.advisor.userFirstName) + ' ' + (this.state.advisor.userLastName) + ' is now an advisor to ' + (this.props.currentTimetable);
+        SearchText = (this.state.advisor.userFirstName) + ' ' + (this.state.advisor.userLastName) + ' is now an advisor to ' + (this.props.currentTimetableName);
       } else {
         SearchText = 'Advisor was not found';
       }
     }
+    let modalContent = (this.props.hasCourses) ? (
+      <div className="add-advisor-modal__container">
+        <div className="search-bar__input-wrapper">
+        <input
+          ref={(c) => { this.input = c; }}
+          placeholder={'Search for an Advisor'}
+          value={this.state.input}
+          className={(this.props.isLoading !== this.props.hasLoaded) ? 'results-loading-gif' : ''}
+          onInput={e => this.setState({ input: e.target.value })}
+        />
+        <button
+          className="btn btn-primary"
+          style={{ marginLeft: 'auto', marginRight: '10%' }}
+          onClick={() => this.searchForAdvisor()}
+        >
+          Search
+        </button>
+        <p>{ SearchText }</p>
+      </div>
+      </div>
+    ) : <div className="add-advisor-modal__container">
+      <div className="search-bar__input-wrapper">
+        <p> Please add to your timetable before adding an advisor</p>
+      </div>
+    </div>;
     return (
       <Modal
         ref={(c) => { this.modal = c; }}
@@ -81,26 +105,8 @@ class AddAdvisorModal extends React.Component {
           history.replaceState({}, 'Semester.ly', '/');
         }}
       >
-        {modalHeader}
-        <div className="add-advisor-modal__container">
-          <div className="search-bar__input-wrapper">
-            <input
-              ref={(c) => { this.input = c; }}
-              placeholder={'Search for an Advisor'}
-              value={this.state.input}
-              className={(this.props.isLoading !== this.props.hasLoaded) ? 'results-loading-gif' : ''}
-              onInput={e => this.setState({ input: e.target.value })}
-            />
-            <button
-              className="btn btn-primary"
-              style={{ marginLeft: 'auto', marginRight: '10%' }}
-              onClick={() => this.searchForAdvisor()}
-            >
-              Search
-            </button>
-            <p>{ SearchText }</p>
-          </div>
-        </div>
+        { modalHeader }
+        { modalContent }
       </Modal>
     );
   }
