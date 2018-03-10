@@ -74,7 +74,6 @@ class Calendar extends React.Component {
     setInterval(() => {
       this.setState({ timelineStyle: this.getTimelineStyle() });
     }, 60000);
-
     // let days = {1: 'mon', 2: 'tue', 3: 'wed', 4: 'thu', 5: 'fri'};
     // let d = new Date("October 13, 2014 11:13:00");
     // let selector = ".fc-" + days[d.getDay()];
@@ -121,8 +120,7 @@ class Calendar extends React.Component {
   fetchShareTimetableLink() {
     if (this.props.shareLinkValid) {
       this.setState({ shareLinkShown: true });
-    }
-    else if (!this.props.isFetchingShareLink) {
+    } else if (!this.props.isFetchingShareLink) {
       this.props.fetchShareTimetableLink();
     }
   }
@@ -143,6 +141,57 @@ class Calendar extends React.Component {
     const saveIcon = this.props.saving ? <i className="fa fa-spin fa-circle-o-notch" /> :
     <i className="fa fa-floppy-o" />;
 
+    const sis = 'https://sis.jhu.edu/sswf/go/';
+    const addSISButton = this.props.registrarSupported ? (
+      <div className="cal-btn-wrapper">
+        <form
+          id="form1"
+          action={sis}
+          method="POST"
+          encType="application/x-www-form-urlencoded"
+        >
+          <input
+            type="hidden"
+            value={JSON.stringify(this.props.fetchSISTimetableData())}
+            name="data"
+          />
+        </form>
+        <button
+          type="sumbit"
+          form="form1"
+          className="save-timetable add-button"
+          data-for="sis-btn-tooltip"
+          data-tip
+        >
+          <img src="/static/img/addtosis.png" alt="SIS" style={{ marginTop: '2px' }} />
+        </button>
+        <ReactTooltip
+          id="sis-btn-tooltip">
+        <span>SIS Add to Cart</span>
+        </ReactTooltip>
+  </div>
+  ) : null;
+    const addAdvisorButton = (
+      <div className="cal-btn-wrapper">
+        <button
+          onClick={() => this.props.toggleAddAdvisorModal()}
+          className="save-timetable"
+          data-tip
+          data-for="add-advisor-btn-tooltip"
+        >
+          <i className="fa fa-user-plus" />
+        </button>
+        <ReactTooltip
+          id="add-advisor-btn-tooltip"
+          class="tooltip"
+          type="dark"
+          place="bottom"
+          effect="solid"
+        >
+          <span>Add Advisor</span>
+        </ReactTooltip>
+      </div>
+    );
     const shareButton = (
       <div className="cal-btn-wrapper">
         <button
@@ -257,7 +306,7 @@ class Calendar extends React.Component {
           place="bottom"
           effect="solid"
         >
-          <span>Preferences</span>
+            <span>Preferences</span>
         </ReactTooltip>
       </div>
         );
@@ -268,9 +317,14 @@ class Calendar extends React.Component {
             <PaginationContainer />
           </div>
           <div className="fc-right">
+<<<<<<< HEAD
             <div>
               <button onClick={() => this.props.fetchAdvisorLink()}>PLS WORK</button>
             </div>
+=======
+            { addSISButton }
+            { addAdvisorButton }
+>>>>>>> df9f9ad36a0309f1c24f8afd40a007552e06f8be
             { shareButton }
             { shareLink }
             { addButton }
@@ -299,19 +353,19 @@ class Calendar extends React.Component {
                             />
                             <th className="fc-day-header fc-widget-header fc-mon">
                                                     Mon
-                                                </th>
+                            </th>
                             <th className="fc-day-header fc-widget-header fc-tue">
                                                     Tue
-                                                </th>
+                            </th>
                             <th className="fc-day-header fc-widget-header fc-wed">
                                                     Wed
-                                                </th>
+                            </th>
                             <th className="fc-day-header fc-widget-header fc-thu">
                                                     Thu
-                                                </th>
+                            </th>
                             <th className="fc-day-header fc-widget-header fc-fri">
                                                     Fri
-                                                </th>
+                            </th>
                           </tr>
                         </thead>
                       </table>
@@ -385,12 +439,15 @@ Calendar.propTypes = {
   endHour: PropTypes.number.isRequired,
   handleCreateNewTimetable: PropTypes.func.isRequired,
   shareLinkValid: PropTypes.bool.isRequired,
+  fetchSISTimetableData: PropTypes.func.isRequired,
   fetchShareTimetableLink: PropTypes.func.isRequired,
   saveTimetable: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   saving: PropTypes.bool.isRequired,
   shareLink: PropTypes.string,
   uses12HrTime: PropTypes.bool.isRequired,
+  registrarSupported: PropTypes.bool.isRequired,
+  toggleAddAdvisorModal: PropTypes.func.isRequired,
 };
 
 export default Calendar;
