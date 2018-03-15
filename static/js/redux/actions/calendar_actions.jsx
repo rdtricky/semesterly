@@ -115,7 +115,6 @@ export const fetchAdvisorLink = (email) => (dispatch, getState) => {
   })
     .then(response => response.json())
       .then((data) => {
-        console.log(data);
         dispatch({
           type: ActionTypes.ADVISOR_LOADED,
           data,

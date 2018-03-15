@@ -15,14 +15,20 @@ GNU General Public License for more details.
 import { connect } from 'react-redux';
 import AddAdvisorModal from '../../modals/add_advisor_modal';
 import { triggerAddAdvisorModal, hideAddAdvisorModal, loadAdvisor } from '../../../actions/modal_actions';
+import { getActiveTimetable } from '../../../reducers/root_reducer';
 import { fetchAdvisorLink } from '../../../actions/calendar_actions';
 
-const mapStateToProps = state => ({
-  isVisible: state.addAdvisorModal.isVisible,
-  isLoading: state.addAdvisorModal.isLoading,
-  hasLoaded: state.addAdvisorModal.hasLoaded,
-  data: state.addAdvisorModal.data,
-});
+const mapStateToProps = (state) => {
+  const slots = getActiveTimetable(state).slots;
+  return {
+    isVisible: state.addAdvisorModal.isVisible,
+    isLoading: state.addAdvisorModal.isLoading,
+    hasLoaded: state.addAdvisorModal.hasLoaded,
+    data: state.addAdvisorModal.data,
+    currentTimetableName: state.savingTimetable.activeTimetable.name,
+    hasCourses: slots.length > 0,
+  };
+};
 
 const AddAdvisorModalContainer = connect(
   mapStateToProps,

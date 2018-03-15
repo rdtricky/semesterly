@@ -27,6 +27,7 @@ class AddAdvisorModal extends React.Component {
     };
     this.startSearch = this.startSearch.bind(this);
     this.endSearch = this.endSearch.bind(this);
+    this.hide = this.hide.bind(this);
   }
 
   componentDidMount() {
@@ -41,11 +42,16 @@ class AddAdvisorModal extends React.Component {
     }
   }
 
+  hide() {
+    this.state.result = '';
+    this.modal.hide();
+  }
+
   startSearch() {
-    this.props.loadAdvisor();
     this.props.fetchAdvisorLink(this.state.input);
     this.state.isLoading = true;
     this.state.input = '';
+    this.state.result = 'One moment...';
   }
 
   endSearch() {
@@ -68,7 +74,7 @@ class AddAdvisorModal extends React.Component {
             <i className="fa fa-user-plus" />
           </div>
           <h1>Add Advisor</h1>
-          <div className="modal-close" onClick={() => this.modal.hide()}>
+          <div className="modal-close" onClick={this.hide}>
             <i className="fa fa-times" />
           </div>
         </div>
@@ -76,10 +82,34 @@ class AddAdvisorModal extends React.Component {
     const modalStyle = {
       width: '100%',
     };
-    console.log('is loading: ' + this.state.isLoading);
-    if (this.props.data !== '') {
+    if (this.props.data !== '' && this.state.isLoading) {
       this.endSearch();
     }
+    let modalContent = (this.props.hasCourses) ? (
+      <div className="add-advisor-modal__container">
+        <div className="search-bar__input-wrapper">
+        <input
+          ref={(c) => { this.input = c; }}
+          placeholder={'Search for an Advisor'}
+          value={this.state.input}
+          className={this.state.isLoading ? 'results-loading-gif' : ''}
+          onInput={e => this.setState({ input: e.target.value })}
+        />
+        <button
+          className="btn btn-primary"
+          style={{ marginLeft: 'auto', marginRight: '10%' }}
+          onClick={() => this.startSearch()}
+        >
+          Search
+        </button>
+        <p>{ this.state.result }</p>
+        </div>
+      </div>
+    ) : <div className="add-advisor-modal__container">
+      <div className="search-bar__input-wrapper">
+        <p> Please add to your timetable before adding an advisor </p>
+      </div>
+    </div>;
     return (
       <Modal
         ref={(c) => { this.modal = c; }}
@@ -90,26 +120,8 @@ class AddAdvisorModal extends React.Component {
           history.replaceState({}, 'Semester.ly', '/');
         }}
       >
-        {modalHeader}
-        <div className="add-advisor-modal__container">
-          <div className="search-bar__input-wrapper">
-            <input
-              ref={(c) => { this.input = c; }}
-              placeholder={'Search for an Advisor'}
-              value={this.state.input}
-              className={this.state.isLoading ? 'results-loading-gif' : ''}
-              onInput={e => this.setState({ input: e.target.value })}
-            />
-            <button
-              className="btn btn-primary"
-              style={{ marginLeft: 'auto', marginRight: '10%' }}
-              onClick={() => this.startSearch()}
-            >
-              Search
-            </button>
-            <p>{this.state.result}</p>
-          </div>
-        </div>
+        { modalHeader }
+        { modalContent }
       </Modal>
     );
   }
@@ -118,11 +130,7 @@ class AddAdvisorModal extends React.Component {
 AddAdvisorModal.propTypes = {
   hideAddAdvisorModal: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
-  // isLoading: PropTypes.bool.isRequired,
-  // hasLoaded: PropTypes.bool.isRequired,
-  loadAdvisor: PropTypes.func.isRequired,
   fetchAdvisorLink: PropTypes.func.isRequired,
-  data: PropTypes.func.isRequired,
 };
 
 export default AddAdvisorModal;
