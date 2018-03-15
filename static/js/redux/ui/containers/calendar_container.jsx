@@ -55,7 +55,7 @@ const CalendarContainer = connect(
     handleCreateNewTimetable,
     fetchSISTimetableData,
     triggerAddAdvisorModal,
-    hideAddAdvisorModal,
+    // hideAddAdvisorModal,
   },
 )(Calendar);
 

@@ -122,8 +122,6 @@ export const triggerAddAdvisorModal = () => ({ type: ActionTypes.TRIGGER_ADD_ADV
 
 export const hideAddAdvisorModal = () => ({ type: ActionTypes.HIDE_ADD_ADVISOR_MODAL });
 
-export const loadAdvisor = () => ({ type: ActionTypes.LOAD_ADVISOR });
-
 export const overrideSettingsShow = data => ({
   type: ActionTypes.OVERRIDE_SETTINGS_SHOW,
   data,
