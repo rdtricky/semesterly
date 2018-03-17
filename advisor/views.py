@@ -14,13 +14,14 @@ from django.http import HttpResponse
 from student.models import Student, PersonalTimetable
 from student.utils import get_student
 from student.serializers import get_student_dict
+from timetable.serializers import DisplayTimetableSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from timetable.models import Semester
 from django.contrib.auth.models import User
 
 
-class AdvisorView(APIView):
+class AddAdvisorView(APIView):
     def post(self, request):
         """ Add an advisor by email """
         try:
@@ -44,3 +45,11 @@ class AdvisorView(APIView):
             return Response({'advisors_added': output}, status=200)
         except KeyError:
             return Response({'reason': 'incorrect request format'}, status=404)
+
+
+class AdvisorView(APIView):
+    def get(self, request):
+        """ Get list of timetables viewable by the authenticated user """
+        current_auth_student = get_student(request)
+        timetables = PersonalTimetable.objects.filter(student=current_auth_student) if current_auth_student else []
+        return Response({'timetables': DisplayTimetableSerializer(timetables, many=True).data}, status=200)

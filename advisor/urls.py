@@ -6,6 +6,6 @@ import advisor.views
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # viewer management
-    url(r'^addAdvisor/$', advisor.views.AdvisorView.as_view()),
+    url(r'^advisor/addAdvisor/$', advisor.views.AddAdvisorView.as_view()),
+    url(r'^advisor/getAdvisingTimetables/$', advisor.views.AdvisorView.as_view())
 )

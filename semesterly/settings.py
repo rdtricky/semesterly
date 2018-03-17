@@ -181,7 +181,6 @@ INSTALLED_APPS = (
     'djcelery',
     'agreement',
     'parsing',
-    'advisor',
 )
 
 REST_FRAMEWORK ={
