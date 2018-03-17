@@ -39,7 +39,7 @@ class AddAdvisorModal extends React.Component {
   }
   searchForAdvisor() {
     this.props.loadAdvisor();
-    this.props.fetchAdvisorLink(this.state.input);
+    this.props.fetchAddAdvisorLink(this.state.input);
   }
 
   render() {
@@ -70,7 +70,7 @@ class AddAdvisorModal extends React.Component {
         SearchText = 'Advisor was not found';
       }
     }
-    let modalContent = (this.props.hasCourses) ? (
+    const modalContent = (this.props.hasCourses) ? (
       <div className="add-advisor-modal__container">
         <div className="search-bar__input-wrapper">
         <input
@@ -88,13 +88,13 @@ class AddAdvisorModal extends React.Component {
           Search
         </button>
         <p>{ SearchText }</p>
+        </div>
       </div>
-      </div>
-    ) : <div className="add-advisor-modal__container">
+    ) : (<div className="add-advisor-modal__container">
       <div className="search-bar__input-wrapper">
         <p> Please add to your timetable before adding an advisor</p>
       </div>
-    </div>;
+    </div>);
     return (
       <Modal
         ref={(c) => { this.modal = c; }}
@@ -118,7 +118,7 @@ AddAdvisorModal.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   hasLoaded: PropTypes.bool.isRequired,
   loadAdvisor: PropTypes.func.isRequired,
-  fetchAdvisorLink: PropTypes.func.isRequired,
+  fetchAddAdvisorLink: PropTypes.func.isRequired,
 };
 
 export default AddAdvisorModal;

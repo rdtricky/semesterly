@@ -19,7 +19,7 @@ import { handleCreateNewTimetable } from '../../actions/timetable_actions';
 import {
     createICalFromTimetable,
     fetchShareTimetableLink,
-    fetchAdvisorLink,
+    fetchAddAdvisorLink,
     fetchSISTimetableData,
 } from '../../actions/calendar_actions';
 import { togglePreferenceModal, triggerSaveCalendarModal, toggleAddAdvisorModal } from '../../actions/modal_actions';
@@ -49,7 +49,7 @@ const CalendarContainer = connect(
     triggerSaveCalendarModal,
     createICalFromTimetable,
     handleCreateNewTimetable,
-    fetchAdvisorLink,
+    fetchAddAdvisorLink,
     fetchSISTimetableData,
     toggleAddAdvisorModal,
   },

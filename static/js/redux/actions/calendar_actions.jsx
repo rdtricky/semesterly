@@ -84,20 +84,12 @@ export const fetchShareTimetableLink = () => (dispatch, getState) => {
         });
 };
 
-export const fetchAdvisorLink = (email) => (dispatch, getState) => {
+export const fetchAddAdvisorLink = (email) => (dispatch, getState) => {
   const state = getState();
 
   const timetableId = getActiveTimetable(state).id;
 
   const semester = getCurrentSemester(state);
-  // const { shareLink, shareLinkValid } = state.calendar;
-  // dispatch({
-  //   type: ActionTypes.REQUEST_SHARE_TIMETABLE_LINK,
-  // });
-  // if (shareLinkValid) {
-  //   receiveShareLink(shareLink);
-  //   return;
-  // }
   fetch(getAddAdvisorEndpoint(), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
