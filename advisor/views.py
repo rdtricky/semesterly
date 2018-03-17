@@ -52,4 +52,10 @@ class AdvisorView(APIView):
         """ Get list of timetables viewable by the authenticated user """
         current_auth_student = get_student(request)
         timetables = PersonalTimetable.objects.filter(student=current_auth_student) if current_auth_student else []
-        return Response({'timetables': DisplayTimetableSerializer(timetables, many=True).data}, status=200)
+
+        tt_can_view = []
+        for tt in timetables:
+            if current_auth_student == tt.student:
+                tt_can_view.append(tt)
+
+        return Response({'timetables': DisplayTimetableSerializer.from_model(tt_can_view, many=True).data}, status=200)

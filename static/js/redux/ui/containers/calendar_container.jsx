@@ -21,6 +21,7 @@ import {
     fetchShareTimetableLink,
     fetchAddAdvisorLink,
     fetchSISTimetableData,
+    fetchGetAdvisingTimetables,
 } from '../../actions/calendar_actions';
 import { togglePreferenceModal, triggerSaveCalendarModal, toggleAddAdvisorModal } from '../../actions/modal_actions';
 import { getMaxEndHour } from '../../reducers/root_reducer';
@@ -51,6 +52,7 @@ const CalendarContainer = connect(
     handleCreateNewTimetable,
     fetchAddAdvisorLink,
     fetchSISTimetableData,
+    fetchGetAdvisingTimetables,
     toggleAddAdvisorModal,
   },
 )(Calendar);

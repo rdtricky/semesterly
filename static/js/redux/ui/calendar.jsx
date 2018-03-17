@@ -322,6 +322,7 @@ class Calendar extends React.Component {
             <PaginationContainer />
           </div>
           <div className="fc-right">
+              <button onClick={() => this.props.fetchGetAdvisingTimetables()}>Get Advising Timetables</button>
             { addSISButton }
             { addAdvisorButton }
             { shareButton }
