@@ -21,7 +21,12 @@ import {
     fetchShareTimetableLink,
     fetchSISTimetableData,
 } from '../../actions/calendar_actions';
-import { togglePreferenceModal, triggerSaveCalendarModal, toggleAddAdvisorModal } from '../../actions/modal_actions';
+import {
+  togglePreferenceModal,
+  triggerSaveCalendarModal,
+  triggerAddAdvisorModal,
+  hideAddAdvisorModal,
+} from '../../actions/modal_actions';
 import { getMaxEndHour } from '../../reducers/root_reducer';
 
 const mapStateToProps = (state) => {
@@ -49,7 +54,8 @@ const CalendarContainer = connect(
     createICalFromTimetable,
     handleCreateNewTimetable,
     fetchSISTimetableData,
-    toggleAddAdvisorModal,
+    triggerAddAdvisorModal,
+    // hideAddAdvisorModal,
   },
 )(Calendar);
 

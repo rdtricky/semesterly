@@ -22,8 +22,12 @@ class AddAdvisorModal extends React.Component {
     this.state = {
       input: '',
       advisor: '',
+      result: '',
+      isLoading: false,
     };
-    this.searchForAdvisor = this.searchForAdvisor.bind(this);
+    this.startSearch = this.startSearch.bind(this);
+    this.endSearch = this.endSearch.bind(this);
+    this.hide = this.hide.bind(this);
   }
 
   componentDidMount() {
@@ -37,9 +41,27 @@ class AddAdvisorModal extends React.Component {
       this.modal.show();
     }
   }
-  searchForAdvisor() {
-    this.props.loadAdvisor();
+
+  hide() {
+    this.state.result = '';
+    this.modal.hide();
+  }
+
+  startSearch() {
     this.props.fetchAdvisorLink(this.state.input);
+    this.state.isLoading = true;
+    this.state.input = '';
+    this.state.result = 'One moment...';
+  }
+
+  endSearch() {
+    this.state.isLoading = false;
+    if (this.props.data.advisors_added.length > 0) {
+      this.state.advisor = this.props.data.advisors_added[0];
+      this.state.result = (this.state.advisor.userFirstName) + ' ' + (this.state.advisor.userLastName) + ' is now an advisor to your timetable';
+    } else {
+      this.state.result = 'Advisor was not found';
+    }
   }
 
   render() {
@@ -52,7 +74,7 @@ class AddAdvisorModal extends React.Component {
             <i className="fa fa-user-plus" />
           </div>
           <h1>Add Advisor</h1>
-          <div className="modal-close" onClick={() => this.modal.hide()}>
+          <div className="modal-close" onClick={this.hide}>
             <i className="fa fa-times" />
           </div>
         </div>
@@ -60,15 +82,8 @@ class AddAdvisorModal extends React.Component {
     const modalStyle = {
       width: '100%',
     };
-    let SearchText = '';
-    SearchText = this.props.isLoading ? 'One Moment...' : SearchText;
-    if (this.props.hasLoaded) {
-      if (this.props.data.advisors_added.length > 0) {
-        this.state.advisor = this.props.data.advisors_added[0];
-        SearchText = (this.state.advisor.userFirstName) + ' ' + (this.state.advisor.userLastName) + ' is now an advisor to ' + (this.props.currentTimetableName);
-      } else {
-        SearchText = 'Advisor was not found';
-      }
+    if (this.props.data !== '' && this.state.isLoading) {
+      this.endSearch();
     }
     let modalContent = (this.props.hasCourses) ? (
       <div className="add-advisor-modal__container">
@@ -77,22 +92,22 @@ class AddAdvisorModal extends React.Component {
           ref={(c) => { this.input = c; }}
           placeholder={'Search for an Advisor'}
           value={this.state.input}
-          className={(this.props.isLoading !== this.props.hasLoaded) ? 'results-loading-gif' : ''}
+          className={this.state.isLoading ? 'results-loading-gif' : ''}
           onInput={e => this.setState({ input: e.target.value })}
         />
         <button
           className="btn btn-primary"
           style={{ marginLeft: 'auto', marginRight: '10%' }}
-          onClick={() => this.searchForAdvisor()}
+          onClick={() => this.startSearch()}
         >
           Search
         </button>
-        <p>{ SearchText }</p>
-      </div>
+        <p>{ this.state.result }</p>
+        </div>
       </div>
     ) : <div className="add-advisor-modal__container">
       <div className="search-bar__input-wrapper">
-        <p> Please add to your timetable before adding an advisor</p>
+        <p> Please add to your timetable before adding an advisor </p>
       </div>
     </div>;
     return (
@@ -101,7 +116,7 @@ class AddAdvisorModal extends React.Component {
         className="add-advisor-modal abnb-modal max-modal"
         modalStyle={modalStyle}
         onHide={() => {
-          this.props.toggleAddAdvisorModal();
+          this.props.hideAddAdvisorModal();
           history.replaceState({}, 'Semester.ly', '/');
         }}
       >
@@ -113,11 +128,8 @@ class AddAdvisorModal extends React.Component {
 }
 
 AddAdvisorModal.propTypes = {
-  toggleAddAdvisorModal: PropTypes.func.isRequired,
+  hideAddAdvisorModal: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  hasLoaded: PropTypes.bool.isRequired,
-  loadAdvisor: PropTypes.func.isRequired,
   fetchAdvisorLink: PropTypes.func.isRequired,
 };
 

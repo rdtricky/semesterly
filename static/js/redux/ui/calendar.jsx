@@ -174,7 +174,7 @@ class Calendar extends React.Component {
     const addAdvisorButton = (
       <div className="cal-btn-wrapper">
         <button
-          onClick={() => this.props.toggleAddAdvisorModal()}
+          onClick={() => this.props.triggerAddAdvisorModal()}
           className="save-timetable"
           data-tip
           data-for="add-advisor-btn-tooltip"
@@ -441,7 +441,7 @@ Calendar.propTypes = {
   shareLink: PropTypes.string,
   uses12HrTime: PropTypes.bool.isRequired,
   registrarSupported: PropTypes.bool.isRequired,
-  toggleAddAdvisorModal: PropTypes.func.isRequired,
+  triggerAddAdvisorModal: PropTypes.func.isRequired,
 };
 
 export default Calendar;
