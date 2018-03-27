@@ -38,8 +38,7 @@ export const getIntegrationEndpoint = (integrationId, courseId) => `/integration
 export const getFinalExamSchedulerEndpoint = () => '/exams/';
 export const getRequestShareExamLinkEndpoint = () => '/exams/links/';
 export const acceptTOSEndpoint = () => '/tos/accept/';
-export const getAddAdvisorEndpoint = () => 'advisor/addAdvisor/';
-export const getAdvisingTimetablesEndpoint = () => 'advisor/getAdvisingTimetables/';
+export const getAddAdvisorEndpoint = () => 'addAdvisor/';
 export function getCourseShareLinkFromModal(code, semester) {
   return `/course/${encodeURIComponent(code)}/${semester.name}/${semester.year}`;
 }
