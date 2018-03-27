@@ -559,3 +559,4 @@ class ReactionView(ValidateSubdomainMixin, RedirectToSignupMixin, APIView):
 
         response = {'reactions': course.get_reactions(student=student)}
         return Response(response, status=status.HTTP_200_OK)
+

@@ -6,6 +6,7 @@ import advisor.views
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^advisor/addAdvisor/$', advisor.views.AddAdvisorView.as_view()),
-    url(r'^advisor/getAdvisingTimetables/$', advisor.views.AdvisorView.as_view())
+    # viewer management
+        url(r'^addAdvisor/$', advisor.views.AdvisorView.as_view()),
+#     url(r'^add_advisor/*$', FeatureFlowView.as_view(feature_name='ADD_ADVISOR')),
 )

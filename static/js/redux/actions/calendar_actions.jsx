@@ -21,7 +21,6 @@ import {
     getRequestShareTimetableLinkEndpoint,
     getCourseShareLink,
     getAddAdvisorEndpoint,
-    getAdvisingTimetablesEndpoint,
 } from '../constants/endpoints';
 import { FULL_WEEK_LIST } from '../constants/constants';
 import {
@@ -85,12 +84,20 @@ export const fetchShareTimetableLink = () => (dispatch, getState) => {
         });
 };
 
-export const fetchAddAdvisorLink = (email) => (dispatch, getState) => {
+export const fetchAdvisorLink = (email) => (dispatch, getState) => {
   const state = getState();
 
   const timetableId = getActiveTimetable(state).id;
 
   const semester = getCurrentSemester(state);
+  // const { shareLink, shareLinkValid } = state.calendar;
+  // dispatch({
+  //   type: ActionTypes.REQUEST_SHARE_TIMETABLE_LINK,
+  // });
+  // if (shareLinkValid) {
+  //   receiveShareLink(shareLink);
+  //   return;
+  // }
   fetch(getAddAdvisorEndpoint(), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
@@ -113,25 +120,6 @@ export const fetchAddAdvisorLink = (email) => (dispatch, getState) => {
           data,
         });
       });
-};
-
-export const fetchGetAdvisingTimetables = () => (dispatch, getState) => {
-  // const state = getState();
-
-  // const timetableId = getActiveTimetable(state).id;
-
-  // const semester = getCurrentSemester(state);
-  fetch(getAdvisingTimetablesEndpoint(), {
-    headers: {
-      'X-CSRFToken': Cookie.get('csrftoken'),
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    method: 'GET',
-    credentials: 'include',
-  })
-    .then(response => response.json())
-    .then(data => console.log(data));
 };
 
 export const addTTtoGCal = () => (dispatch, getState) => {
