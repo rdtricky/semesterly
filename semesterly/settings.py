@@ -164,6 +164,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'social.apps.django_app.default',
     'django_extensions',
+    'advisor',
     'authpipe',
     'timetable',
     'exams',
@@ -180,7 +181,6 @@ INSTALLED_APPS = (
     'djcelery',
     'agreement',
     'parsing',
-    'advisor',
 )
 
 REST_FRAMEWORK ={

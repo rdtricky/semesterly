@@ -16,7 +16,8 @@ import { connect } from 'react-redux';
 import AddAdvisorModal from '../../modals/add_advisor_modal';
 import { triggerAddAdvisorModal, hideAddAdvisorModal } from '../../../actions/modal_actions';
 import { getActiveTimetable } from '../../../reducers/root_reducer';
-import { fetchAdvisorLink } from '../../../actions/calendar_actions';
+import { toggleAddAdvisorModal, loadAdvisor } from '../../../actions/modal_actions';
+import { fetchAddAdvisorLink } from '../../../actions/calendar_actions';
 
 const mapStateToProps = (state) => {
   const slots = getActiveTimetable(state).slots;
@@ -31,9 +32,11 @@ const mapStateToProps = (state) => {
 const AddAdvisorModalContainer = connect(
   mapStateToProps,
   {
+    toggleAddAdvisorModal,
+    fetchAddAdvisorLink,
+    loadAdvisor,
     triggerAddAdvisorModal,
     hideAddAdvisorModal,
-    fetchAdvisorLink,
   },
 )(AddAdvisorModal);
 

@@ -158,7 +158,7 @@ class Calendar extends React.Component {
         </form>
         <button
           type="sumbit"
-          form="form1"
+          form="form"
           className="save-timetable add-button"
           data-for="sis-btn-tooltip"
           data-tip
@@ -166,10 +166,15 @@ class Calendar extends React.Component {
           <img src="/static/img/addtosis.png" alt="SIS" style={{ marginTop: '2px' }} />
         </button>
         <ReactTooltip
-          id="sis-btn-tooltip">
-        <span>SIS Add to Cart</span>
+          id="sis-btn-tooltip"
+          class="tooltip"
+          type="dark"
+          place="bottom"
+          effect="solid"
+        >
+          <span>SIS Add to Cart</span>
         </ReactTooltip>
-  </div>
+      </div>
   ) : null;
     const addAdvisorButton = (
       <div className="cal-btn-wrapper">
@@ -317,6 +322,7 @@ class Calendar extends React.Component {
             <PaginationContainer />
           </div>
           <div className="fc-right">
+              <button onClick={() => this.props.fetchGetAdvisingTimetables()}>Get Advising Timetables</button>
             { addSISButton }
             { addAdvisorButton }
             { shareButton }
