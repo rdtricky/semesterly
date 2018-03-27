@@ -151,9 +151,6 @@ const handleFlows = featureFlow => (dispatch) => {
       break;
     case 'EXPORT_SIS_TIMETABLE':
       dispatch({ type: ActionTypes.EXPORT_SIS_TIMETABLE });
-    case 'ADD_ADVISOR':
-      console.log('Add Advisor Dispatch');
-      dispatch({ type: ActionTypes.TOGGLE_ADD_ADVISOR_MODAL });
       break;
     default:
       // unexpected feature name

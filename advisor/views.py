@@ -34,6 +34,10 @@ class AddAdvisorView(APIView):
             semester = Semester.objects.get(name=sem_name, year=sem_year)
             school = request.subdomain
 
+            if student:
+                if student.user.email == advisor_email:
+                    return Response({'reason': 'cannot add yourself', 'advisors_added': []}, status=404)
+
             output = []
             advisors_list = list(User.objects.filter(email=advisor_email))
             for advisor in advisors_list:
@@ -44,7 +48,7 @@ class AddAdvisorView(APIView):
                     output.append(get_student_dict(school, advisor_obj, semester))
             return Response({'advisors_added': output}, status=200)
         except KeyError:
-            return Response({'reason': 'incorrect request format'}, status=404)
+            return Response({'reason': 'incorrect request format', 'advisors_added': []}, status=404)
 
 
 class AdvisorView(APIView):
@@ -55,7 +59,8 @@ class AdvisorView(APIView):
 
         tt_can_view = []
         for tt in timetables:
-            if current_auth_student == tt.student:
+            if current_auth_student in tt.advisors.all():
+                # if the user can view this timetable (i.e. is an advisor)
                 tt_can_view.append(tt)
 
         return Response({'timetables': DisplayTimetableSerializer.from_model(tt_can_view, many=True).data}, status=200)

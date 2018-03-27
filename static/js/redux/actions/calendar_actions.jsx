@@ -109,7 +109,7 @@ export const fetchAddAdvisorLink = (email) => (dispatch, getState) => {
     .then(response => response.json())
       .then((data) => {
         dispatch({
-          type: ActionTypes.ADVISOR_LOADED,
+          type: ActionTypes.SEND_ADVISOR_DATA,
           data,
         });
       });

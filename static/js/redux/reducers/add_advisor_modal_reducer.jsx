@@ -16,17 +16,18 @@ import * as ActionTypes from '../constants/actionTypes';
 
 const addAdvisorModal = (state =  {
   isVisible: false,
-  isLoading: false,
-  hasLoaded: false,
-  data: 'empty',
+  data: '',
 }, action) => {
   switch (action.type) {
-    case ActionTypes.TOGGLE_ADD_ADVISOR_MODAL:
-      return Object.assign({}, state, { isVisible: !state.isVisible });
-    case ActionTypes.LOAD_ADVISOR:
-      return Object.assign({}, state, { isLoading: true });
-    case ActionTypes.ADVISOR_LOADED:
-      return Object.assign({}, state, { hasLoaded: true, data: action.data });
+    case ActionTypes.TRIGGER_ADD_ADVISOR_MODAL:
+      return {
+        isVisible: true,
+        data: '',
+      };
+    case ActionTypes.HIDE_ADD_ADVISOR_MODAL:
+      return Object.assign({}, state, { isVisible: false });
+    case ActionTypes.SEND_ADVISOR_DATA:
+      return Object.assign({}, state, { data: action.data });
     default:
       return state;
   }
