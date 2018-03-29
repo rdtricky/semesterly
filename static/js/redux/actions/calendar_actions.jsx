@@ -21,6 +21,7 @@ import {
     getRequestShareTimetableLinkEndpoint,
     getCourseShareLink,
     getAddAdvisorEndpoint,
+    getAdvisingTimetablesEndpoint,
 } from '../constants/endpoints';
 import { FULL_WEEK_LIST } from '../constants/constants';
 import {
@@ -120,6 +121,28 @@ export const fetchAdvisorLink = (email) => (dispatch, getState) => {
           data,
         });
       });
+};
+
+export const fetchAdvisingTimetables = () => (dispatch, getState) => {
+  const state = getState();
+
+  fetch(getAdvisingTimetablesEndpoint(), {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    credentials: 'include',
+  })
+    .then(response => response.json())
+      .then(data => console.log(data));
+      // .then((data) => {
+      //   dispatch({
+      //     type: ActionTypes.SEND_ADVISOR_DATA,
+      //     data,
+      //   });
+      // });
 };
 
 export const addTTtoGCal = () => (dispatch, getState) => {

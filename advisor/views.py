@@ -55,11 +55,10 @@ class AddAdvisorView(APIView):
 
 
 class AdvisorView(APIView):
-    def get(self, request):
+    def post(self, request):
         """ Get list of timetables viewable by the authenticated user """
         current_auth_student = get_student(request)
-        timetables = PersonalTimetable.objects.filter(student=current_auth_student) if current_auth_student else []
-
+        timetables = PersonalTimetable.objects.all()
         tt_can_view = []
         for tt in timetables:
             if current_auth_student in tt.advisors.all():
