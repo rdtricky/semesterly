@@ -27,6 +27,9 @@ class AdvisorView(APIView):
                 timetable = PersonalTimetable.objects.get(student=student, pk=tt_id, school=school, semester=semester)
                 if timetable:
                     advisor_obj = Student.objects.get(user=advisor)
+                    existing_advisors = timetable.advisors.all()
+                    if advisor_obj in existing_advisors:
+                        return Response({'reason': 'advisor already exists', 'advisors_added:':[]}, status=404)
                     timetable.advisors.add(advisor_obj)
                     output.append(get_student_dict(school, advisor_obj, semester))
             return Response({'advisors_added': output}, status=200)
