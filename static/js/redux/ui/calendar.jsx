@@ -310,6 +310,22 @@ class Calendar extends React.Component {
         </ReactTooltip>
       </div>
         );
+    const toolBar = false ? (
+      <div className="fc-right">
+        {addSISButton}
+        {addAdvisorButton}
+        {shareButton}
+        {shareLink}
+        {addButton}
+        {saveButton}
+        {saveToCalendarButton}
+        {preferenceButton}
+      </div>
+    ) : (
+      <div className="fc-center">
+        <p>changes in this session will not be saved</p>
+      </div>
+    );
     return (
       <div className="calendar fc fc-ltr fc-unthemed week-calendar">
         <div className="fc-toolbar no-print">
@@ -317,14 +333,7 @@ class Calendar extends React.Component {
             <PaginationContainer />
           </div>
           <div className="fc-right">
-            { addSISButton }
-            { addAdvisorButton }
-            { shareButton }
-            { shareLink }
-            { addButton }
-            { saveButton }
-            { saveToCalendarButton }
-            { preferenceButton }
+            {toolBar}
           </div>
           <div className="fc-center" />
           <div className="fc-clear" />
