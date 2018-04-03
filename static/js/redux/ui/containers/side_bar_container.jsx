@@ -48,7 +48,7 @@ const mapStateToProps = (state) => {
     mandatoryCourses,
     optionalCourses,
     advisingTimetables: state.timetables.advisingTimetables,
-    savedTimetables: state.userInfo.data.timetable,
+    savedTimetables: state.userInfo.data.timetables,
     courseToColourIndex: state.ui.courseToColourIndex,
     courseToClassmates: state.classmates.courseToClassmates,
     avgRating: timetable.avg_rating,
