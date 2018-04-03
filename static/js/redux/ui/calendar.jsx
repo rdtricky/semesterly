@@ -315,16 +315,24 @@ class Calendar extends React.Component {
         </ReactTooltip>
       </div>
         );
-    const toolBar = false ? (
-      <div className="fc-right">
-        {addSISButton}
-        {addAdvisorButton}
-        {shareButton}
-        {shareLink}
-        {addButton}
-        {saveButton}
-        {saveToCalendarButton}
-        {preferenceButton}
+    const toolBar = true ? (
+      <div className="fc-toolbar no-print">
+        <div className="fc-left">
+          <PaginationContainer />
+        </div>
+        <div className="fc-right">
+          { addAdvisorButton }
+          { addSISButton }
+          { shareButton }
+          { shareLink }
+          { addButton }
+          { saveButton }
+          { saveToCalendarButton }
+          { preferenceButton }
+        </div>
+        <div className="fc-center" />
+        <div className="fc-clear" />
+
       </div>
     ) : (
       <div className="fc-center">

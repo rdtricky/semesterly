@@ -34,6 +34,7 @@ class SideBar extends React.Component {
     this.hideDropdown = this.hideDropdown.bind(this);
 
     console.log(this.props.advisingTimetables);
+    console.log(this.props.savedTimetables);
   }
 
   hideDropdown() {
@@ -68,7 +69,7 @@ class SideBar extends React.Component {
         </button>
       </div>
         )) : null;
-    const advisingTimetables = this.props.savedTimetables ? this.props.savedTimetables.map(t => (
+    const advisingTimetables = this.props.advisingTimetables ? this.props.advisingTimetables.timetables.items.map(t => (
       <div className="tt-name" key={t.id} onMouseDown={() => this.props.loadTimetable(t)}>
         {t.name}
         <h6> owned by Kristin Yim </h6>
@@ -222,11 +223,15 @@ class SideBar extends React.Component {
 // TODO: should be these values by default in the state
 SideBar.defaultProps = {
   savedTimetables: null,
+  advisingTimetables: null,
   avgRating: 0,
 };
 
 SideBar.propTypes = {
   savedTimetables: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+  })),
+  advisingTimetables: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
   })),
   mandatoryCourses: PropTypes.arrayOf(SemesterlyPropTypes.denormalizedCourse).isRequired,
