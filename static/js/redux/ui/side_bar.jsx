@@ -49,7 +49,6 @@ class SideBar extends React.Component {
   }
 
   render() {
-    console.log(this.props.advisingTimetables);
     const savedTimetables = this.props.savedTimetables ? this.props.savedTimetables.map(t => (
       <div className="tt-name" key={t.id} onMouseDown={() => this.props.loadTimetable(t)}>
         {t.name}
@@ -67,6 +66,12 @@ class SideBar extends React.Component {
         </button>
       </div>
         )) : null;
+    const advisingTimetables = this.props.advisingTimetables ? this.props.advisingTimetables.map(t => (
+      <div className="tt-name" key={t.id} onMouseDown={() => this.props.loadTimetable(t)}>
+        {t.name}
+        <h6> owned by Kristin Yim </h6>
+      </div>
+    )) : null;
     // TOOD: code duplication between masterslots/optionalslots
     let masterSlots = this.props.mandatoryCourses ?
       this.props.mandatoryCourses.map((course) => {
@@ -159,8 +164,12 @@ class SideBar extends React.Component {
             >
               <div className="tip-border" />
               <div className="tip" />
-              <h4>{ `${this.props.semester.name} ${this.props.semester.year}` }</h4>
+              <h5>{ `${this.props.semester.name} ${this.props.semester.year}` }</h5>
+              <div className="advisor-line" />
+              <h4> My Timetables </h4>
               { savedTimetables }
+              <h4> Timetables Shared with Me </h4>
+              { advisingTimetables }
             </div>
           </ClickOutHandler>
         </div>
@@ -211,11 +220,15 @@ class SideBar extends React.Component {
 // TODO: should be these values by default in the state
 SideBar.defaultProps = {
   savedTimetables: null,
+  advisingTimetables: null,
   avgRating: 0,
 };
 
 SideBar.propTypes = {
   savedTimetables: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+  })),
+  advisingTimetables: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
   })),
   mandatoryCourses: PropTypes.arrayOf(SemesterlyPropTypes.denormalizedCourse).isRequired,
