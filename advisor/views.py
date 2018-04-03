@@ -63,6 +63,8 @@ class AdvisorView(APIView):
         for tt in timetables:
             if current_auth_student in tt.advisors.all():
                 # if the user can view this timetable (i.e. is an advisor)
-                tt_can_view.append(tt)
-
-        return Response({'timetables': DisplayTimetableSerializer.from_model(tt_can_view, many=True).data}, status=200)
+                with_user = DisplayTimetableSerializer.from_model(tt).data
+                user = tt.student.user
+                with_user['user'] = {'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}
+                tt_can_view.append(with_user)
+        return Response({'timetables': tt_can_view}, status=200)
