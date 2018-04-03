@@ -18,7 +18,8 @@ import {
   getActiveTimetable,
   getCurrentSemester,
   getDenormCourseById,
-  getCoursesFromSlots } from '../../reducers/root_reducer';
+  getCoursesFromSlots,
+} from '../../reducers/root_reducer';
 import {
     fetchCourseInfo,
     showFinalExamsModal,
@@ -46,8 +47,8 @@ const mapStateToProps = (state) => {
     coursesInTimetable,
     mandatoryCourses,
     optionalCourses,
-    advisingTimetables: state,
-    savedTimetables: state.userInfo.data.timetables,
+    advisingTimetables: state.timetables.advisingTimetables,
+    savedTimetables: state.userInfo.data.timetable,
     courseToColourIndex: state.ui.courseToColourIndex,
     courseToClassmates: state.classmates.courseToClassmates,
     avgRating: timetable.avg_rating,

@@ -32,9 +32,6 @@ class SideBar extends React.Component {
     this.state = { showDropdown: false };
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.hideDropdown = this.hideDropdown.bind(this);
-
-    console.log(this.props.advisingTimetables);
-    console.log(this.props.savedTimetables);
   }
 
   hideDropdown() {
@@ -52,6 +49,7 @@ class SideBar extends React.Component {
   }
 
   render() {
+    console.log(this.props.advisingTimetables);
     const savedTimetables = this.props.savedTimetables ? this.props.savedTimetables.map(t => (
       <div className="tt-name" key={t.id} onMouseDown={() => this.props.loadTimetable(t)}>
         {t.name}

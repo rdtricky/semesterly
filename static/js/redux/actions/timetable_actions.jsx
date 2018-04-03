@@ -115,6 +115,10 @@ export const fetchTimetables = (requestBody, removing, newActive = 0) => (dispat
 };
 
 export const fetchAdvisingTimetables = () => (dispatch) => {
+  dispatch({
+    type: ActionTypes.GET_ADVISING_TIMETABLES,
+  });
+
   fetch(getAdvisingTimetablesEndpoint(), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
@@ -127,8 +131,8 @@ export const fetchAdvisingTimetables = () => (dispatch) => {
     .then(response => response.json())
     .then((data) => {
       dispatch({
-        type: ActionTypes.GET_ADVISING_TIMETABLES,
-        data,
+        type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
+        ...data,
       });
     });
 };
