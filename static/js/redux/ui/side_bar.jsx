@@ -32,6 +32,8 @@ class SideBar extends React.Component {
     this.state = { showDropdown: false };
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.hideDropdown = this.hideDropdown.bind(this);
+
+    console.log(this.props.advisingTimetables);
   }
 
   hideDropdown() {

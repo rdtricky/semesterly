@@ -14,7 +14,7 @@ GNU General Public License for more details.
 
 import * as ActionTypes from '../constants/actionTypes';
 
-const addAdvisorModal = (state =  {
+const addAdvisorModal = (state = {
   isVisible: false,
   data: '',
 }, action) => {

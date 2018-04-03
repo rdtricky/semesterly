@@ -22,6 +22,7 @@ import rootReducer from './reducers/root_reducer';
 import SemesterlyContainer from './ui/containers/semesterly_container';
 import { fetchMostClassmatesCount, handleAgreement, isRegistered } from './actions/user_actions';
 import {
+  fetchAdvisingTimetables,
   handleCreateNewTimetable, loadCachedTimetable, loadTimetable,
   lockTimetable,
 } from './actions/timetable_actions';
@@ -48,6 +49,9 @@ const setupTimetables = (userTimetables, allSemesters, oldSemesters) => (dispatc
   if (userTimetables.length > 0) {
     const activeTimetable = userTimetables[0];
     dispatch(loadTimetable(activeTimetable));
+    setTimeout(() => {
+      dispatch(fetchAdvisingTimetables());
+    }, 500);
     setTimeout(() => {
       dispatch(fetchMostClassmatesCount(activeTimetable));
     }, 500);
