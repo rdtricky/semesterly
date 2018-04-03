@@ -49,9 +49,7 @@ const setupTimetables = (userTimetables, allSemesters, oldSemesters) => (dispatc
   if (userTimetables.length > 0) {
     const activeTimetable = userTimetables[0];
     dispatch(loadTimetable(activeTimetable));
-    setTimeout(() => {
-      dispatch(fetchAdvisingTimetables());
-    }, 500);
+    dispatch(fetchAdvisingTimetables());
     setTimeout(() => {
       dispatch(fetchMostClassmatesCount(activeTimetable));
     }, 500);
