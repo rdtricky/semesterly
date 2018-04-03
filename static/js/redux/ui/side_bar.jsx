@@ -49,7 +49,8 @@ class SideBar extends React.Component {
   }
 
   render() {
-    console.log(this.props.advisingTimetables);
+    // console.log(this.props.advisingTimetables);
+
     const savedTimetables = this.props.savedTimetables ? this.props.savedTimetables.map(t => (
       <div className="tt-name" key={t.id} onMouseDown={() => this.props.loadTimetable(t)}>
         {t.name}
@@ -67,7 +68,7 @@ class SideBar extends React.Component {
         </button>
       </div>
         )) : null;
-    const advisingTimetables = this.props.advisingTimetables ? this.props.advisingTimetables.timetables.items.map(t => (
+    const advisingTimetables = this.props.advisingTimetables ? this.props.advisingTimetables.map(t => (
       <div className="tt-name" key={t.id} onMouseDown={() => this.props.loadTimetable(t)}>
         {t.name}
         <h6> owned by Kristin Yim </h6>
