@@ -166,8 +166,13 @@ class Calendar extends React.Component {
           <img src="/static/img/addtosis.png" alt="SIS" style={{ marginTop: '2px' }} />
         </button>
         <ReactTooltip
-          id="sis-btn-tooltip">
-        <span>SIS Add to Cart</span>
+          id="sis-btn-tooltip"
+          class="tooltip"
+          type="dark"
+          place="bottom"
+          effect="solid"
+        >
+          <span>SIS Add to Cart</span>
         </ReactTooltip>
   </div>
   ) : null;

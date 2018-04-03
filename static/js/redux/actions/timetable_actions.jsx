@@ -19,7 +19,7 @@ import {
   getActiveTimetableCourses,
   getCurrentSemester,
   getDenormTimetable } from '../reducers/root_reducer';
-import { getTimetablesEndpoint } from '../constants/endpoints';
+import { getTimetablesEndpoint, getAdvisingTimetablesEndpoint } from '../constants/endpoints';
 import {
     browserSupportsLocalStorage,
     generateCustomEventId,
@@ -111,6 +111,25 @@ export const fetchTimetables = (requestBody, removing, newActive = 0) => (dispat
       if (userData.isLoggedIn && json.timetables.length > 0 && userData.social_courses !== null) {
         dispatch(fetchClassmates(json.timetables[0]));
       }
+    });
+};
+
+export const fetchAdvisingTimetables = () => (dispatch) => {
+  fetch(getAdvisingTimetablesEndpoint(), {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    credentials: 'include',
+  })
+    .then(response => response.json())
+    .then((data) => {
+      dispatch({
+        type: ActionTypes.GET_ADVISING_TIMETABLES,
+        data,
+      });
     });
 };
 

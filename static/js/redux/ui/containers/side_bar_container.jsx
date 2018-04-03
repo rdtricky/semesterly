@@ -46,6 +46,7 @@ const mapStateToProps = (state) => {
     coursesInTimetable,
     mandatoryCourses,
     optionalCourses,
+    advisingTimetables: state,
     savedTimetables: state.userInfo.data.timetables,
     courseToColourIndex: state.ui.courseToColourIndex,
     courseToClassmates: state.classmates.courseToClassmates,
@@ -55,6 +56,7 @@ const mapStateToProps = (state) => {
     getShareLink: courseCode => getCourseShareLink(courseCode, getCurrentSemester(state)),
   };
 };
+
 
 const SideBarContainer = connect(
     mapStateToProps,

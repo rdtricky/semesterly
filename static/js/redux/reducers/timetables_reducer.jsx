@@ -23,6 +23,7 @@ export const initialState = {
   active: 0,
   loadingCachedTT: true,
   lastSlotAdded: null, // either int (course id), object (custom slots state), or null
+  advisingTimetables: [],
 };
 
 const timetables = (state = initialState, action) => {
@@ -72,6 +73,9 @@ const timetables = (state = initialState, action) => {
 
     case ActionTypes.UPDATE_LAST_COURSE_ADDED:
       return Object.assign({}, state, { lastSlotAdded: action.course });
+
+    case ActionTypes.GET_ADVISING_TIMETABLES:
+      return Object.assign({}, state, { advisingTimetables: action.data });
 
     default:
       return state;

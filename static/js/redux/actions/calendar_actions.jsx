@@ -84,7 +84,7 @@ export const fetchShareTimetableLink = () => (dispatch, getState) => {
         });
 };
 
-export const fetchAdvisorLink = (email) => (dispatch, getState) => {
+export const fetchAdvisorLink = email => (dispatch, getState) => {
   const state = getState();
 
   const timetableId = getActiveTimetable(state).id;
@@ -146,25 +146,23 @@ export const addTTtoGCal = () => (dispatch, getState) => {
   }
 };
 
-export const fetchSISTimetableData = () => {
-  return (dispatch, getState) => {
-    const state = getState();
-    const tt = getActiveDenormTimetable(state);
-    const sem = getCurrentSemester(state);
-    const sections = tt.slots.map(slot => (
-      {course: slot.course.code, section: slot.section.meeting_section.replace('(', '').replace(')', '')}
+export const fetchSISTimetableData = () => (dispatch, getState) => {
+  const state = getState();
+  const tt = getActiveDenormTimetable(state);
+  const sem = getCurrentSemester(state);
+  const sections = tt.slots.map(slot => (
+      { course: slot.course.code, section: slot.section.meeting_section.replace('(', '').replace(')', '') }
     ));
-    const sisData = {
-      action: 'AddToCart',
-      data: {
-        year: sem.year,
-        term: sem.name,
-        sections,
-      },
-    };
-    dispatch({type: ActionTypes.EXPORT_SIS_TIMETABLE});
-    return sisData;
+  const sisData = {
+    action: 'AddToCart',
+    data: {
+      year: sem.year,
+      term: sem.name,
+      sections,
+    },
   };
+  dispatch({ type: ActionTypes.EXPORT_SIS_TIMETABLE });
+  return sisData;
 };
 
 export const createICalFromTimetable = () => (dispatch, getState) => {
