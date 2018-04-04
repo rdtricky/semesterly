@@ -129,10 +129,10 @@ export const fetchAdvisingTimetables = () => (dispatch) => {
     credentials: 'include',
   })
     .then(response => response.json())
-    .then((data) => {
+    .then((timetables) => {
       dispatch({
         type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
-        ...data,
+        ...timetables,
       });
     });
 };
@@ -161,6 +161,7 @@ export const lockTimetable = timetable => (dispatch, getState) => {
   if (timetable.has_conflict) {
     dispatch({ type: ActionTypes.TURN_CONFLICTS_ON });
   }
+
   dispatch({
     type: ActionTypes.RECEIVE_COURSE_SECTIONS,
     courseSections: lockActiveSections(getDenormTimetable(state, timetable)),
@@ -190,6 +191,14 @@ export const loadTimetable = (timetable, isLoadingNewTimetable = false) => (disp
     timetable: displayTimetable,
     upToDate: !isLoadingNewTimetable,
   });
+
+  dispatch(changeActiveTimetable(timetable));
+
+  // cache new info into local storage
+  if (!state.userInfo.data.isLoggedIn) {
+    saveLocalActiveIndex(timetable);
+    saveLocalSemester(getCurrentSemester(state));
+  }
 
   return dispatch(lockTimetable(displayTimetable));
 };

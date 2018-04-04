@@ -66,10 +66,10 @@ class SideBar extends React.Component {
         </button>
       </div>
         )) : null;
-    const advisingTimetables = this.props.advisingTimetables ? this.props.advisingTimetables.map(t => (
-      <div className="tt-name" key={t.id} onMouseDown={() => this.props.loadTimetable(t)}>
-        {t.name}
-        <h6> owned by Kristin Yim </h6>
+    const advisingTimetables = this.props.advisingTimetables ? this.props.advisingTimetables.map(tt => (
+      <div className="tt-name" key={tt.id} onMouseDown={() => this.props.loadTimetable(tt)}>
+        {tt.name}
+        <h6> owned by {tt.user ? tt.user.first_name : 'First'} {tt.user ? tt.user.last_name : 'Last'} </h6>
       </div>
     )) : null;
     // TOOD: code duplication between masterslots/optionalslots
