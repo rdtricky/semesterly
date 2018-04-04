@@ -192,14 +192,6 @@ export const loadTimetable = (timetable, isLoadingNewTimetable = false) => (disp
     upToDate: !isLoadingNewTimetable,
   });
 
-  dispatch(changeActiveTimetable(timetable));
-
-  // cache new info into local storage
-  if (!state.userInfo.data.isLoggedIn) {
-    saveLocalActiveIndex(timetable);
-    saveLocalSemester(getCurrentSemester(state));
-  }
-
   return dispatch(lockTimetable(displayTimetable));
 };
 
