@@ -23,7 +23,6 @@ export const initialState = {
   active: 0,
   loadingCachedTT: true,
   lastSlotAdded: null, // either int (course id), object (custom slots state), or null
-  advisingTimetables: [],
 };
 
 const timetables = (state = initialState, action) => {

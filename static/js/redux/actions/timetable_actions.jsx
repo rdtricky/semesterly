@@ -184,6 +184,7 @@ export const loadTimetable = (timetable, isLoadingNewTimetable = false) => (disp
     events: timetable.events.map(event =>
       ({ ...event, id: generateCustomEventId(), preview: false })),
   };
+  console.log(displayTimetable);
 
   dispatch({
     type: ActionTypes.CHANGE_ACTIVE_SAVED_TIMETABLE,
