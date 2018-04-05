@@ -15,6 +15,7 @@ from student.models import Student, PersonalTimetable
 from student.utils import get_student
 from student.serializers import get_student_dict
 from timetable.serializers import DisplayTimetableSerializer
+from courses.serializers import CourseSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from timetable.models import Semester
@@ -57,14 +58,26 @@ class AddAdvisorView(APIView):
 class AdvisorView(APIView):
     def post(self, request):
         """ Get list of timetables viewable by the authenticated user """
-        current_auth_student = get_student(request)
+        student = get_student(request)
         timetables = PersonalTimetable.objects.all()
+        sem_name = request.data['sem_name']
+        year = request.data['year']
+        sem, _ = Semester.objects.get_or_create(name=sem_name, year=year)
         tt_can_view = []
+        courses = set()
         for tt in timetables:
-            if current_auth_student in tt.advisors.all():
+            if student in tt.advisors.all():
                 # if the user can view this timetable (i.e. is an advisor)
+                # add owner data for display
                 with_user = DisplayTimetableSerializer.from_model(tt).data
                 user = tt.student.user
                 with_user['user'] = {'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}
+                for c in tt.courses.all():
+                    courses.add(c)
                 tt_can_view.append(with_user)
-        return Response({'timetables': tt_can_view}, status=200)
+        context = {'semester': sem, 'school': request.subdomain, 'student': student}
+        return Response({
+            'timetables': tt_can_view,
+            'courses': CourseSerializer(courses, context=context, many=True).data
+        }, status=200)
+

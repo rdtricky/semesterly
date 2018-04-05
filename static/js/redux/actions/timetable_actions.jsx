@@ -114,29 +114,6 @@ export const fetchTimetables = (requestBody, removing, newActive = 0) => (dispat
     });
 };
 
-export const fetchAdvisingTimetables = () => (dispatch) => {
-  dispatch({
-    type: ActionTypes.GET_ADVISING_TIMETABLES,
-  });
-
-  fetch(getAdvisingTimetablesEndpoint(), {
-    headers: {
-      'X-CSRFToken': Cookie.get('csrftoken'),
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-    credentials: 'include',
-  })
-    .then(response => response.json())
-    .then((timetables) => {
-      dispatch({
-        type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
-        ...timetables,
-      });
-    });
-};
-
 /*
  Returns the body of the request used to get new timetables
  */
@@ -482,6 +459,36 @@ export const addOrRemoveOptionalCourse = course => (dispatch, getState) => {
     numOptionCourses: state.optionalCourses.numRequired,
   });
   dispatch(fetchTimetables(reqBody, removing));
+};
+
+export const fetchAdvisingTimetables = () => (dispatch, getState) => {
+  const state = getState();
+  dispatch({
+    type: ActionTypes.GET_ADVISING_TIMETABLES,
+  });
+
+  fetch(getAdvisingTimetablesEndpoint(), {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({
+      sem_name: getCurrentSemester(state).name,
+      year: getCurrentSemester(state).year,
+    }),
+  })
+    .then(response => response.json())
+    .then((json) => {
+      const { timetables, courses } = json;
+      dispatch(receiveCourses(courses));
+      dispatch({
+        type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
+        timetables,
+      });
+    });
 };
 
 export const toggleConflicts = () => ({ type: ActionTypes.TOGGLE_CONFLICTS });

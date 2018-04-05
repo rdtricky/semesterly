@@ -28,6 +28,7 @@ const calendar = (state = {
         isFetchingShareLink: false,
         shareLinkValid: true,
       });
+    case ActionTypes.RECEIVE_ADVISING_TIMETABLES:
     case ActionTypes.RECEIVE_TIMETABLES:
     case ActionTypes.CHANGE_ACTIVE_TIMETABLE:
       return Object.assign({}, state, { shareLinkValid: false });
