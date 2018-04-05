@@ -28,6 +28,10 @@ const addAdvisorModal = (state = {
       return Object.assign({}, state, { isVisible: false });
     case ActionTypes.SEND_ADVISOR_DATA:
       return Object.assign({}, state, { data: action.data });
+    case ActionTypes.GET_ADVISING_TIMETABLES:
+      return Object.assign({}, state, { isFetching: true });
+    case ActionTypes.RECEIVE_ADVISING_TIMETABLES:
+      return Object.assign({}, state, { advisingTimetables: action.timetables, isFetching: false });
     default:
       return state;
   }

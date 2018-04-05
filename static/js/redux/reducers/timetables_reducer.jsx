@@ -73,12 +73,6 @@ const timetables = (state = initialState, action) => {
     case ActionTypes.UPDATE_LAST_COURSE_ADDED:
       return Object.assign({}, state, { lastSlotAdded: action.course });
 
-    case ActionTypes.GET_ADVISING_TIMETABLES:
-      return Object.assign({}, state, { isFetching: true });
-
-    case ActionTypes.RECEIVE_ADVISING_TIMETABLES:
-      return Object.assign({}, state, { advisingTimetables: action.timetables, isFetching: false });
-
     default:
       return state;
   }
