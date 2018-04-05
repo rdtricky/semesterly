@@ -66,6 +66,12 @@ class SideBar extends React.Component {
         </button>
       </div>
         )) : null;
+    const advisingTimetables = this.props.advisingTimetables ? this.props.advisingTimetables.map(tt => (
+      <div className="tt-name" key={tt.id} onMouseDown={() => this.props.loadTimetable(tt)}>
+        {tt.name}
+        <h6> owned by {tt.user ? tt.user.first_name : 'First'} {tt.user ? tt.user.last_name : 'Last'} </h6>
+      </div>
+    )) : null;
     // TOOD: code duplication between masterslots/optionalslots
     let masterSlots = this.props.mandatoryCourses ?
       this.props.mandatoryCourses.map((course) => {
@@ -161,6 +167,7 @@ class SideBar extends React.Component {
               <h5>{ `${this.props.semester.name} ${this.props.semester.year}` }</h5>
               <div className="advisor-line" />
               { savedTimetables }
+              { advisingTimetables }
             </div>
           </ClickOutHandler>
         </div>
