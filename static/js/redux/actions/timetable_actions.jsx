@@ -306,10 +306,8 @@ export const hoverSection = (denormCourse, section) => ({
  */
 export const addOrRemoveCourse = (newCourseId, lockingSection = '') => (dispatch, getState) => {
   let state = getState();
-  let user_match = false;
-  console.log(state.savingTimetable.activeTimetable);
-  if (state.savingTimetable.activeTimetable.user === undefined) { user_match = true;}
-  console.log(user_match);
+  let userMatch = false;
+  if (state.savingTimetable.activeTimetable.user === undefined) { userMatch = true;}
   if (state.timetables.isFetching) {
     return;
   }
@@ -355,7 +353,7 @@ export const addOrRemoveCourse = (newCourseId, lockingSection = '') => (dispatch
   // and they're not trying to lock a new section).
   // otherwise, they're adding it
   dispatch(fetchTimetables(reqBody, removing));
-  if ( user_match === true ) {dispatch(autoSave());}
+  if ( userMatch === true ) {dispatch(autoSave());}
       //dispatch(autoSave());
 };
 
