@@ -40,6 +40,7 @@ export const getRequestShareExamLinkEndpoint = () => '/exams/links/';
 export const acceptTOSEndpoint = () => '/tos/accept/';
 export const getAddAdvisorEndpoint = () => '/advisor/addAdvisor/';
 export const getAdvisingTimetablesEndpoint = () => 'advisor/getAdvisingTimetables/';
+export const getDeleteAdvisingTimetableEndpoint = (semester, name, email) => `/advisor/deleteAdvisor/${semester.name}/${semester.year}/${name}/${email}`;
 export function getCourseShareLinkFromModal(code, semester) {
   return `/course/${encodeURIComponent(code)}/${semester.name}/${semester.year}`;
 }

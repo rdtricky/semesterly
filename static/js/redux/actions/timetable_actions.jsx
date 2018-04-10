@@ -162,7 +162,6 @@ export const loadTimetable = (timetable, isLoadingNewTimetable = false) => (disp
     events: timetable.events.map(event =>
       ({ ...event, id: generateCustomEventId(), preview: false })),
   };
-  console.log(displayTimetable);
 
   dispatch({
     type: ActionTypes.CHANGE_ACTIVE_SAVED_TIMETABLE,
@@ -308,7 +307,7 @@ export const hoverSection = (denormCourse, section) => ({
 export const addOrRemoveCourse = (newCourseId, lockingSection = '') => (dispatch, getState) => {
   let state = getState();
   let userMatch = false;
-  if (state.savingTimetable.activeTimetable.user === undefined) { userMatch = true;}
+  if (state.savingTimetable.activeTimetable.user === undefined) { userMatch = true; }
   if (state.timetables.isFetching) {
     return;
   }
@@ -354,7 +353,7 @@ export const addOrRemoveCourse = (newCourseId, lockingSection = '') => (dispatch
   // and they're not trying to lock a new section).
   // otherwise, they're adding it
   dispatch(fetchTimetables(reqBody, removing));
-  if ( userMatch === true ) {dispatch(autoSave());
+  if ( userMatch === true ) {dispatch(autoSave());}
 };
 
 // fetch timetables with same courses, but updated optional courses/custom slots

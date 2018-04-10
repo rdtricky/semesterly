@@ -19,6 +19,7 @@ import {
     deleteRegistrationTokenEndpoint,
     getClassmatesEndpoint,
     getDeleteTimetableEndpoint,
+    getDeleteAdvisingTimetableEndpoint,
     getFriendsEndpoint,
     getIntegrationEndpoint,
     getLoadSavedTimetablesEndpoint,
@@ -256,6 +257,40 @@ export const deleteTimetable = timetable => (dispatch, getState) => {
       }
       return json;
     });
+};
+
+export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
+  const state = getState();
+  if (!state.userInfo.data.isLoggedIn) {
+    dispatch({ type: ActionTypes.TOGGLE_SIGNUP_MODAL });
+  }
+  // mark that we're now trying to save this timetable
+  dispatch({
+    type: ActionTypes.REQUEST_SAVE_TIMETABLE,
+  });
+
+  getDeleteAdvisingTimetableEndpoint(getCurrentSemester(state), timetable.name, timetable.user.email), {
+  //   headers: {
+  //     'X-CSRFToken': Cookie.get('csrftoken'),
+  //     Accept: 'application/json',
+  //     'Content-Type': 'application/json',
+  //   },
+  //   method: 'DELETE',
+  //   credentials: 'include',
+  // })
+  //   .then(response => response.json())
+  //   .then((json) => {
+  //     dispatch({
+  //       type: ActionTypes.RECEIVE_SAVED_TIMETABLES,
+  //       timetables: json.timetables,
+  //     });
+  //     if (json.timetables.length > 0) {
+  //       dispatch(loadTimetable(json.timetables[0]));
+  //     } else {
+  //       nullifyTimetable(dispatch);
+  //     }
+  //     return json;
+  //   });
 };
 
 export const saveSettings = callback => (dispatch, getState) => {
