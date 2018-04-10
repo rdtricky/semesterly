@@ -308,9 +308,7 @@ export const hoverSection = (denormCourse, section) => ({
 export const addOrRemoveCourse = (newCourseId, lockingSection = '') => (dispatch, getState) => {
   let state = getState();
   let user_match = false;
-  console.log(state.savingTimetable.activeTimetable);
   if (state.savingTimetable.activeTimetable.user === undefined) { user_match = true;}
-  console.log(user_match);
   if (state.timetables.isFetching) {
     return;
   }
@@ -357,7 +355,6 @@ export const addOrRemoveCourse = (newCourseId, lockingSection = '') => (dispatch
   // otherwise, they're adding it
   dispatch(fetchTimetables(reqBody, removing));
   if ( user_match === true ) {dispatch(autoSave());}
-      //dispatch(autoSave());
 };
 
 // fetch timetables with same courses, but updated optional courses/custom slots
