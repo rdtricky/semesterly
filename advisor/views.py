@@ -81,20 +81,24 @@ class AdvisorView(APIView):
             'courses': CourseSerializer(courses, context=context, many=True).data
         }, status=200)
 
-    def delete(self, request, sem_name, year, tt_name, advisor_email):
+    def delete(self, request, sem_name, year, tt_name, student_email):
             """ Deletes an advisor from a PersonalTimetable by name/year/term and advisor email."""
-            advisor_list = list(User.objects.filter(email=advisor_email))  # list of people who can view the tt
+            advisor = get_student(request)  # current authorized user
+            student_list = list(User.objects.get(email=student_email))
 
             school = request.subdomain
             semester = Semester.objects.get(name=sem_name, year=year)
-            student = get_student(request)  # student who owns the TT (not the current authorized user)
 
-            to_delete = PersonalTimetable.objects.filter(
-                student=student, name=tt_name, school=school, semester=semester)
-            for tt in to_delete:
-                for advisor in advisor_list:
+            removed = []
+            # account for multiple student emails for same account
+            for student in student_list:
+                timetables = PersonalTimetable.objects.filter(
+                    student=student, name=tt_name, school=school, semester=semester)
+
+                for tt in timetables:
                     if advisor in tt.advisors.all():
                         tt.advisors.remove(advisor)
+                        removed.append(tt)
 
-            return Response({'timetables': get_student_tts(student, school, semester)},
+            return Response({'timetables': DisplayTimetableSerializer.from_model(removed, many=True).data},
                             status=200)
