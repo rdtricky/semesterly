@@ -269,21 +269,23 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
     type: ActionTypes.REQUEST_SAVE_TIMETABLE,
   });
 
-  getDeleteAdvisingTimetableEndpoint(getCurrentSemester(state), timetable.name, timetable.user.email), {
-  //   headers: {
-  //     'X-CSRFToken': Cookie.get('csrftoken'),
-  //     Accept: 'application/json',
-  //     'Content-Type': 'application/json',
-  //   },
-  //   method: 'DELETE',
-  //   credentials: 'include',
-  // })
-  //   .then(response => response.json())
-  //   .then((json) => {
-  //     dispatch({
-  //       type: ActionTypes.RECEIVE_SAVED_TIMETABLES,
-  //       timetables: json.timetables,
-  //     });
+  fetch(getDeleteAdvisingTimetableEndpoint(getCurrentSemester(state), timetable.name, timetable.user.email), {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'DELETE',
+    credentials: 'include',
+  })
+    .then(response => response.json())
+    .then((json) => console.log(json))
+    .then((json) => {
+      dispatch({
+        type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
+        timetables: json,
+      });
+    });
   //     if (json.timetables.length > 0) {
   //       dispatch(loadTimetable(json.timetables[0]));
   //     } else {
