@@ -22,6 +22,7 @@ export const initialState = {
   isVisible: false,
   saving: false,
   isFetching: false,
+  advisingTimetables: [],
 };
 
 const userInfo = (state = initialState, action) => {

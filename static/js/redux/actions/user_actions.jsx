@@ -232,9 +232,10 @@ export const deleteTimetable = timetable => (dispatch, getState) => {
     dispatch({ type: ActionTypes.TOGGLE_SIGNUP_MODAL });
   }
     // mark that we're now trying to save this timetable
-  dispatch({
+  dispatch({ // Changes saving = !upToDate which we think is what triggers changes in following fetch
     type: ActionTypes.REQUEST_SAVE_TIMETABLE,
   });
+  console.log(state);
   fetch(getDeleteTimetableEndpoint(getCurrentSemester(state), timetable.name), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
@@ -246,14 +247,14 @@ export const deleteTimetable = timetable => (dispatch, getState) => {
   })
     .then(response => response.json())
     .then((json) => {
-      dispatch({
+      dispatch({ // Refreshes your timetables list
         type: ActionTypes.RECEIVE_SAVED_TIMETABLES,
         timetables: json.timetables,
       });
-      if (json.timetables.length > 0) {
+      if (json.timetables.length > 0) { // Changes what timetable you're currently on
         dispatch(loadTimetable(json.timetables[0]));
       } else {
-        nullifyTimetable(dispatch);
+        nullifyTimetable(dispatch); // If length < 0 then create empty timetable for the user
       }
       return json;
     });
@@ -268,7 +269,6 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
   dispatch({
     type: ActionTypes.REQUEST_SAVE_TIMETABLE,
   });
-  console.log(timetable.user.email);
   fetch(getDeleteAdvisingTimetableEndpoint(getCurrentSemester(state), timetable.name, timetable.user.email), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
@@ -277,22 +277,20 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
     },
     // method: 'DELETE',
     credentials: 'include',
-  }).then(json => console.log(json))
-    .then(response => response.json())
-    .then((json) => console.log(json))
+  }).then(response => response.json())
     .then((json) => {
+      console.log(json);
       dispatch({
         type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
         timetables: json,
       });
+      if (json.timetables.length > 0) {
+        dispatch(loadTimetable(json.timetables[0]));
+      } else {
+        nullifyTimetable(dispatch);
+      }
+      return json;
     });
-  //     if (json.timetables.length > 0) {
-  //       dispatch(loadTimetable(json.timetables[0]));
-  //     } else {
-  //       nullifyTimetable(dispatch);
-  //     }
-  //     return json;
-  //   });
 };
 
 export const saveSettings = callback => (dispatch, getState) => {
