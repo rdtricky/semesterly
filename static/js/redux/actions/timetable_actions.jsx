@@ -353,7 +353,7 @@ export const addOrRemoveCourse = (newCourseId, lockingSection = '') => (dispatch
   // and they're not trying to lock a new section).
   // otherwise, they're adding it
   dispatch(fetchTimetables(reqBody, removing));
-  if ( userMatch === true ) {dispatch(autoSave());}
+  if (userMatch === true) { dispatch(autoSave()); }
       //dispatch(autoSave());
 };
 

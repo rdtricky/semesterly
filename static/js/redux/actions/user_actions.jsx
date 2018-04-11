@@ -231,9 +231,10 @@ export const deleteTimetable = timetable => (dispatch, getState) => {
     dispatch({ type: ActionTypes.TOGGLE_SIGNUP_MODAL });
   }
     // mark that we're now trying to save this timetable
-  dispatch({
+  dispatch({ // Changes saving = !upToDate which we think is what triggers changes in following fetch
     type: ActionTypes.REQUEST_SAVE_TIMETABLE,
   });
+  console.log(state);
   fetch(getDeleteTimetableEndpoint(getCurrentSemester(state), timetable.name), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
@@ -245,14 +246,14 @@ export const deleteTimetable = timetable => (dispatch, getState) => {
   })
     .then(response => response.json())
     .then((json) => {
-      dispatch({
+      dispatch({ // Refreshes your timetables list
         type: ActionTypes.RECEIVE_SAVED_TIMETABLES,
         timetables: json.timetables,
       });
-      if (json.timetables.length > 0) {
+      if (json.timetables.length > 0) { // Changes what timetable you're currently on
         dispatch(loadTimetable(json.timetables[0]));
       } else {
-        nullifyTimetable(dispatch);
+        nullifyTimetable(dispatch); // If length < 0 then create empty timetable for the user
       }
       return json;
     });
