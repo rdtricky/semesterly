@@ -30,6 +30,14 @@ class AddAdvisorModal extends React.Component {
     this.hide = this.hide.bind(this);
   }
 
+  componentWillMount() {
+    $(document.body).on('keydown', (e) => {
+      if (e.key === 'Enter' && this.state.input.length > 0) {
+        this.startSearch();
+      }
+    });
+  }
+
   componentDidMount() {
     if (this.props.isVisible) {
       this.modal.show();
@@ -56,7 +64,9 @@ class AddAdvisorModal extends React.Component {
 
   endSearch() {
     this.state.isLoading = false;
-    if (this.props.data.advisors_added.length > 0) {
+    if (this.props.data.advisor_added === undefined) {
+      this.state.result = this.props.data.reason === undefined ? "Please enter valid Email" : this.props.data.reason;
+    } else if (this.props.data.advisors_added.length > 0) {
       this.state.advisor = this.props.data.advisors_added[0];
       this.state.result = (this.state.advisor.userFirstName) + ' ' + (this.state.advisor.userLastName) + ' is now an advisor to your timetable';
     } else {

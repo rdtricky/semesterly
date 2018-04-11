@@ -284,14 +284,13 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
         type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
         timetables: json,
       });
+      if (json.timetables.length > 0) {
+        dispatch(loadTimetable(json.timetables[0]));
+      } else {
+        nullifyTimetable(dispatch);
+      }
+      return json;
     });
-  //     if (json.timetables.length > 0) {
-  //       dispatch(loadTimetable(json.timetables[0]));
-  //     } else {
-  //       nullifyTimetable(dispatch);
-  //     }
-  //     return json;
-  //   });
 };
 
 export const saveSettings = callback => (dispatch, getState) => {
