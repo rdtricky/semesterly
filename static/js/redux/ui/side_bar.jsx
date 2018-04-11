@@ -69,6 +69,12 @@ class SideBar extends React.Component {
     const advisingTimetables = this.props.advisingTimetables ? this.props.advisingTimetables.map(tt => (
       <div className="tt-name" key={tt.id} onMouseDown={() => this.props.loadTimetable(tt)}>
         {tt.name}
+        <button
+          onClick={event => this.stopPropagation(() => this.props.deleteAdvisingTimetable(tt), event)}
+          className="row-button"
+        >
+          <i className="fa fa-trash-o" />
+        </button>
         <h6> owned by {tt.user ? tt.user.first_name : 'First'} {tt.user ? tt.user.last_name : 'Last'} </h6>
       </div>
     )) : null;
@@ -107,7 +113,7 @@ class SideBar extends React.Component {
         getShareLink={this.props.getShareLink}
       />);
     }) : null;
-    const dropItDown = savedTimetables && savedTimetables.length !== 0 ?
+    const dropItDown = savedTimetables && savedTimetables.length !== 0 || advisingTimetables && advisingTimetables.length !== 0?
             (<div
               className="timetable-drop-it-down"
               onMouseDown={this.toggleDropdown}
@@ -166,9 +172,7 @@ class SideBar extends React.Component {
               <div className="tip" />
               <h5>{ `${this.props.semester.name} ${this.props.semester.year}` }</h5>
               <div className="advisor-line" />
-              <h4> My Timetables </h4>
               { savedTimetables }
-              <h4> Timetables Shared with Me </h4>
               { advisingTimetables }
             </div>
           </ClickOutHandler>
@@ -228,9 +232,6 @@ SideBar.propTypes = {
   savedTimetables: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
   })),
-  advisingTimetables: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-  })),
   mandatoryCourses: PropTypes.arrayOf(SemesterlyPropTypes.denormalizedCourse).isRequired,
   optionalCourses: PropTypes.arrayOf(SemesterlyPropTypes.denormalizedCourse).isRequired,
   coursesInTimetable: PropTypes.arrayOf(SemesterlyPropTypes.denormalizedCourse).isRequired,
@@ -240,6 +241,7 @@ SideBar.propTypes = {
   courseToClassmates: PropTypes.shape({ '*': SemesterlyPropTypes.classmates }).isRequired,
   loadTimetable: PropTypes.func.isRequired,
   deleteTimetable: PropTypes.func.isRequired,
+  deleteAdvisingTimetable: PropTypes.func.isRequired,
   isCourseInRoster: PropTypes.func.isRequired,
   duplicateTimetable: PropTypes.func.isRequired,
   fetchCourseInfo: PropTypes.func.isRequired,

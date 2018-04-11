@@ -31,7 +31,7 @@ import {
     addOrRemoveOptionalCourse,
     loadTimetable,
 } from '../../actions/timetable_actions';
-import { deleteTimetable, duplicateTimetable } from '../../actions/user_actions';
+import { deleteTimetable, duplicateTimetable, deleteAdvisingTimetable } from '../../actions/user_actions';
 import { getCourseShareLink } from '../../constants/endpoints';
 
 const mapStateToProps = (state) => {
@@ -69,6 +69,7 @@ const SideBarContainer = connect(
     launchTextbookModal: triggerTextbookModal,
     duplicateTimetable,
     deleteTimetable,
+    deleteAdvisingTimetable,
     launchFinalExamsModal: showFinalExamsModal,
     loadTimetable,
   },

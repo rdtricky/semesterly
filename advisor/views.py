@@ -12,7 +12,7 @@
 
 from django.http import HttpResponse
 from student.models import Student, PersonalTimetable
-from student.utils import get_student
+from student.utils import get_student, get_student_tts
 from student.serializers import get_student_dict
 from timetable.serializers import DisplayTimetableSerializer
 from courses.serializers import CourseSerializer
@@ -81,3 +81,24 @@ class AdvisorView(APIView):
             'courses': CourseSerializer(courses, context=context, many=True).data
         }, status=200)
 
+    def delete(self, request, sem_name, year, tt_name, student_email):
+            """ Deletes an advisor from a PersonalTimetable by name/year/term and advisor email."""
+            advisor = get_student(request)  # current authorized user
+            student_list = list(User.objects.get(email=student_email))
+
+            school = request.subdomain
+            semester = Semester.objects.get(name=sem_name, year=year)
+
+            removed = []
+            # account for multiple student emails for same account
+            for student in student_list:
+                timetables = PersonalTimetable.objects.filter(
+                    student=student, name=tt_name, school=school, semester=semester)
+
+                for tt in timetables:
+                    if advisor in tt.advisors.all():
+                        tt.advisors.remove(advisor)
+                        removed.append(tt)
+
+            return Response({'timetables': DisplayTimetableSerializer.from_model(removed, many=True).data},
+                            status=200)
