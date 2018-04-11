@@ -307,7 +307,9 @@ export const hoverSection = (denormCourse, section) => ({
 export const addOrRemoveCourse = (newCourseId, lockingSection = '') => (dispatch, getState) => {
   let state = getState();
   let userMatch = false;
-  if (state.savingTimetable.activeTimetable.user === undefined) { userMatch = true; }
+  if (state.savingTimetable.activeTimetable.user === undefined) {
+    userMatch = true;
+  }
   if (state.timetables.isFetching) {
     return;
   }
@@ -353,21 +355,24 @@ export const addOrRemoveCourse = (newCourseId, lockingSection = '') => (dispatch
   // and they're not trying to lock a new section).
   // otherwise, they're adding it
   dispatch(fetchTimetables(reqBody, removing));
-  if (userMatch === true) { dispatch(autoSave()); }
+  if (userMatch === true) {
+    dispatch(autoSave());
+  }
 
 // fetch timetables with same courses, but updated optional courses/custom slots
-const refetchTimetables = () => (dispatch, getState) => {
-  const state = getState();
-  const reqBody = getBaseReqBody(state);
+  const refetchTimetables = () => (dispatch, getState) => {
+    const state = getState();
+    const reqBody = getBaseReqBody(state);
 
-  Object.assign(reqBody, {
-    optionCourses: state.optionalCourses.courses,
-    numOptionCourses: state.optionalCourses.numRequired,
-    customSlots: state.customSlots,
-  });
+    Object.assign(reqBody, {
+      optionCourses: state.optionalCourses.courses,
+      numOptionCourses: state.optionalCourses.numRequired,
+      customSlots: state.customSlots,
+    });
 
-  dispatch(fetchTimetables(reqBody, false));
-  dispatch(autoSave());
+    dispatch(fetchTimetables(reqBody, false));
+    dispatch(autoSave());
+  };
 };
 
 export const addLastAddedCourse = () => (dispatch, getState) => {
