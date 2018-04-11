@@ -268,7 +268,7 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
   dispatch({
     type: ActionTypes.REQUEST_SAVE_TIMETABLE,
   });
-  fetch(getDeleteAdvisingTimetableEndpoint(getCurrentSemester(state), timetable.name, timetable.user.emai), {
+  fetch(getDeleteAdvisingTimetableEndpoint(getCurrentSemester(state), timetable.name, timetable.user.email), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
       Accept: 'application/json',
@@ -276,10 +276,9 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
     },
     method: 'DELETE',
     credentials: 'include',
-  }).then(json => console.log(json))
-    .then(response => response.json())
-    .then((json) => console.log(json))
+  }).then(response => response.json())
     .then((json) => {
+      console.log(json);
       dispatch({
         type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
         timetables: json,
