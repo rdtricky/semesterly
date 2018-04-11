@@ -275,7 +275,7 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    // method: 'DELETE',
+    method: 'DELETE',
     credentials: 'include',
   }).then(response => response.json())
     .then((json) => {
