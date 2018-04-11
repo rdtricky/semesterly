@@ -84,7 +84,12 @@ class AdvisorView(APIView):
     def delete(self, request, sem_name, year, tt_name, student_email):
             """ Deletes an advisor from a PersonalTimetable by name/year/term and advisor email."""
             advisor = get_student(request)  # current authorized user
-            student_list = list(User.objects.get(email=student_email))
+            student_user_list = list(User.objects.filter(email=student_email))
+
+            if len(student_user_list) == 0:
+                return Response({'reason': 'invalid student email'}, status=404)
+
+            student_list = [Student.objects.get(user=u) for u in student_user_list]
 
             school = request.subdomain
             semester = Semester.objects.get(name=sem_name, year=year)
