@@ -113,7 +113,7 @@ class SideBar extends React.Component {
         getShareLink={this.props.getShareLink}
       />);
     }) : null;
-    const dropItDown = savedTimetables && savedTimetables.length !== 0 || advisingTimetables && advisingTimetables.length !== 0?
+    const dropItDown = (savedTimetables && savedTimetables.length !== 0) || (advisingTimetables && advisingTimetables.length !== 0) ?
             (<div
               className="timetable-drop-it-down"
               onMouseDown={this.toggleDropdown}
