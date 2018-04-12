@@ -341,8 +341,14 @@ class Calendar extends React.Component {
         <div className="fc-center">
           <PaginationContainer />
           <p>Viewing { this.props.userName }'s schedule</p>
-          <p>Changes in this session will not be saved</p>
+          <p>Changes to this session will not be saved</p>
         </div>
+        <div className="fc-right">
+          { addButton }
+          { preferenceButton }
+        </div>
+        <div className="fc-center" />
+        <div className="fc-clear" />
       </div>
     );
     return (
