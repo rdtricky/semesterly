@@ -96,12 +96,13 @@ class AdvisorView(APIView):
             removed = []
             # account for multiple student emails for same account
             for student in student_list:
-                tt = PersonalTimetable.objects.get(
+                timetables = PersonalTimetable.objects.filter(
                     student=student, name=tt_name, school=school, semester=semester)
 
-                if advisor in tt.advisors.all():
-                    tt.advisors.remove(advisor)
-                    removed.append(tt)
+                for tt in timetables:
+                    if advisor in tt.advisors.all():
+                        tt.advisors.remove(advisor)
+                        removed.append(tt)
 
             return Response({'timetables': DisplayTimetableSerializer.from_model(removed, many=True).data},
                             status=200)
