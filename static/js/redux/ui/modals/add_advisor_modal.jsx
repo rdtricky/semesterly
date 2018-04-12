@@ -64,13 +64,15 @@ class AddAdvisorModal extends React.Component {
 
   endSearch() {
     this.state.isLoading = false;
-    if (this.props.data.advisor_added === undefined) {
-      this.state.result = this.props.data.reason === undefined ? "Please enter valid Email" : this.props.data.reason;
-    } else if (this.props.data.advisors_added.length > 0) {
-      this.state.advisor = this.props.data.advisors_added[0];
-      this.state.result = (this.state.advisor.userFirstName) + ' ' + (this.state.advisor.userLastName) + ' is now an advisor to your timetable';
+    if (this.props.data.advisors_added) {
+      if (this.props.data.advisors_added.length > 0) {
+        this.state.advisor = this.props.data.advisors_added[0];
+        this.state.result = (this.state.advisor.userFirstName) + ' ' + (this.state.advisor.userLastName) + ' is now an advisor to your timetable';
+      } else {
+        this.state.result = 'Advisor was not found';
+      }
     } else {
-      this.state.result = 'Advisor was not found';
+      this.state.result = this.props.data.reason === undefined ? 'Please enter valid email' : this.props.data.reason;
     }
   }
 

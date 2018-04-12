@@ -35,7 +35,7 @@ import {
   getActiveTimetable,
   getCurrentSemester } from '../reducers/root_reducer';
 import { fetchCourseClassmates } from './modal_actions';
-import { getNumberedName, loadTimetable, nullifyTimetable } from './timetable_actions';
+import { getNumberedName, loadTimetable, nullifyTimetable, fetchAdvisingTimetables } from './timetable_actions';
 import { receiveCourses } from './search_actions';
 import { MAX_TIMETABLE_NAME_LENGTH } from '../constants/constants';
 import * as ActionTypes from '../constants/actionTypes';
@@ -235,7 +235,6 @@ export const deleteTimetable = timetable => (dispatch, getState) => {
   dispatch({ // Changes saving = !upToDate which we think is what triggers changes in following fetch
     type: ActionTypes.REQUEST_SAVE_TIMETABLE,
   });
-  console.log(state);
   fetch(getDeleteTimetableEndpoint(getCurrentSemester(state), timetable.name), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
@@ -269,6 +268,7 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
   dispatch({
     type: ActionTypes.REQUEST_SAVE_TIMETABLE,
   });
+
   fetch(getDeleteAdvisingTimetableEndpoint(getCurrentSemester(state), timetable.name, timetable.user.email), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
@@ -279,15 +279,18 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
     credentials: 'include',
   }).then(response => response.json())
     .then((json) => {
-      console.log(json);
-      dispatch({
-        type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
-        timetables: json,
-      });
       if (json.timetables.length > 0) {
-        dispatch(loadTimetable(json.timetables[0]));
+        dispatch(fetchAdvisingTimetables());
+        console.log(state.userInfo.data.timetables);
+        if (state.userInfo.data.timetables.length > 0) {
+          dispatch(loadTimetable(state.userInfo.data.timetables[0]));
+        } else {
+          nullifyTimetable(dispatch);
+        }
+        // dispatch(loadTimetable());
       } else {
-        nullifyTimetable(dispatch);
+        console.log('failed delete');
+        // nullifyTimetable(dispatch);
       }
       return json;
     });
