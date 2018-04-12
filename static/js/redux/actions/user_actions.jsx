@@ -280,10 +280,12 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
   }).then(response => response.json())
     .then((json) => {
       if (json.timetables.length > 0) {
-        dispatch(fetchAdvisingTimetables());
-        console.log(state.timetables);
-        if (state.timetables.length > 0) {
-          dispatch(loadTimetable(state.timetables[0]));
+        // dispatch(fetchAdvisingTimetables());
+        console.log(state.userInfo.data.timetables);
+        if (state.userInfo.data.timetables.length > 0) {
+          dispatch(loadTimetable(state.userInfo.data.timetables[0]));
+        } else {
+          nullifyTimetable(dispatch);
         }
         // dispatch(loadTimetable());
       } else {
