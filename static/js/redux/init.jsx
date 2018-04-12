@@ -168,6 +168,7 @@ const setup = () => (dispatch) => {
   dispatch(receiveCourses(initData.currentUser.courses));
   dispatch(setupTimetables(initData.currentUser.timetables, initData.allSemesters,
     initData.oldSemesters));
+  console.log(initData);
 
   if (browserSupportsLocalStorage() && 'serviceWorker' in navigator) {
     dispatch(setupChromeNotifs());
