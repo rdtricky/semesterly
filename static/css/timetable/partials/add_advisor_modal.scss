@@ -22,3 +22,26 @@
 .add-advisor-header-icon {
   font-size: 5em;
 }
+
+.advisor-card {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 0, 0, 0.15);
+  margin: 11px;
+  display: inline-flex;
+  overflow: hidden;
+  position: relative;
+  p {
+    margin: 5px;
+    z-index: 2;
+  }
+  &:after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 80px;
+    background: cadetblue;
+    position: absolute;
+    -ms-transform: rotate(35deg) translate(-15px,35px); /* IE 9 */
+    -webkit-transform: rotate(35deg) translate(-15px,35px); /* Safari */
+    transform: rotate(35deg) translate(-15px,35px); /* Standard syntax */
+  }
+}
