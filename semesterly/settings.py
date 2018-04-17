@@ -181,6 +181,7 @@ INSTALLED_APPS = (
     'agreement',
     'parsing',
     'advisor',
+    'comments',
 )
 
 REST_FRAMEWORK ={
