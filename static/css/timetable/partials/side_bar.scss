@@ -385,26 +385,39 @@
 }
 
 .comment-slot {
-  background-color: white;
+  background-color: #e6e6e6;
   border-radius: 5px;
   color: $gfff;
   cursor: pointer;
   margin-bottom: 5px;
   padding: 5px 5px 5px 10px;
   position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: color .3s, background-color .3s;
 
   &.optional {
     opacity: .5;
   }
+  input {
+    border: 0px solid $gfff;
+    background-color: #e6e6e6;
+    font-family: $font-body;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 21px;
+    outline: 0;
+    padding: 5px;
+    transition: border .3s;
+    width: 100%;
+  }
 }
 
 .comment-content {
+  padding: 5px;
   h3 {
     color: $g222;
     font-size: 14px;
     font-weight: 400;
-    height: 14px;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -421,21 +434,24 @@
 }
 
 .comment-user-data {
+  display: inline-flex;
+
   h4 {
+    margin-top: 5px;
+    margin-bottom: 0px;
+  }
+  span {
+    float: left;
+    line-height: 14px;
+  }
+  h2 {
     color: $g222;
-    font-size: 8px;
+    font-size: 15px;
     font-weight: 400;
-    height: 14px;
     margin-top: 5px;
     margin-left: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 100%;
-
-    span {
-      float: left;
-      line-height: 14px;
-    }
   }
 }

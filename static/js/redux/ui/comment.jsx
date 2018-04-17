@@ -62,15 +62,16 @@ class Comment extends React.Component {
     )
     const commentData = (this.state.content === '') ? null : (
       <div className="comment-user-data">
-        <h4>{ profilePic } { this.props.writer } { this.props.date }</h4>
+        <h4>{ profilePic }</h4>
+        <h2>{ this.props.writer }<br/> {this.props.date}</h2>
       </div>
     )
     return (<div
       className="comment-slot"
       // style={{ backgroundColor: COLOUR_DATA[this.props.colourIndex].background }}
     >
-      { commentContent }
       { commentData }
+      { commentContent }
     </div>);
   }
 }
