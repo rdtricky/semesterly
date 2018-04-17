@@ -49,19 +49,28 @@ class Comment extends React.Component {
             onInput={e => this.setState({ input: e.target.value })}
           />
       </div>
-    ) :
+    ) : (
       <div className="comment-content">
         <h3>{ this.state.content }</h3>
-      </div>;
+      </div>
+    )
+    const profilePic = (
+      <div
+        className="social-pro-pic"
+        style={{backgroundImage: 'url(https://lh6.googleusercontent.com/-iqNXPUCvgTk/AAAAAAAAAAI/AAAAAAAAAIU/IMUYG8om_Y4/photo.jpg?sz=50)', margin: '5px', zIndex: '2' }}
+      />
+    )
+    const commentData = (this.state.content === '') ? null : (
+      <div className="comment-user-data">
+        <h4>{ profilePic } { this.props.writer } { this.props.date }</h4>
+      </div>
+    )
     return (<div
       className="comment-slot"
-      style={{ backgroundColor: COLOUR_DATA[this.props.colourIndex].background }}
+      // style={{ backgroundColor: COLOUR_DATA[this.props.colourIndex].background }}
     >
       { commentContent }
-      <div className="comment-writer-date">
-        <h4>{ this.props.writer }</h4>
-        <h4>{ this.props.date }</h4>
-      </div>
+      { commentData }
     </div>);
   }
 }
