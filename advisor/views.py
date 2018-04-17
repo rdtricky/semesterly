@@ -13,7 +13,7 @@
 from django.http import HttpResponse
 from student.models import Student, PersonalTimetable
 from student.utils import get_student, get_student_tts
-from student.serializers import get_student_dict
+from student.serializers import get_student_dict, StudentSerializer
 from timetable.serializers import DisplayTimetableSerializer
 from courses.serializers import CourseSerializer
 from rest_framework.views import APIView
@@ -53,6 +53,27 @@ class AddAdvisorView(APIView):
         except KeyError:
             return Response({'reason': 'Incorrect request format', 'advisors_added': []}, status=404)
 
+class RetrieveAdvisorView(APIView):
+    def post(self, request):
+        """Return list of advisors who can view the current timetable. """
+        try:
+            tt_id = request.data['tt_id']
+            sem_name = request.data['sem_name']
+            sem_year = request.data['sem_year']
+
+            student = get_student(request)
+            semester = Semester.objects.get(name=sem_name, year=sem_year)
+            school = request.subdomain
+
+            advisors = []
+
+            timetable = PersonalTimetable.objects.get(student=student, pk=tt_id, school=school, semester=semester)
+            for advisor in timetable.advisors.all():
+                advisors.append(Student.objects.get(user=advisor.user))
+            return Response({'advisors_existing': StudentSerializer(advisors, many=True).data }, status=200)
+        except KeyError:
+            # CHANGE TO IDK BUT NOT THIS
+            return Response({'reason': 'Incorrect request format', 'advisors_existing': []}, status=404)
 
 class AdvisorView(APIView):
     def post(self, request):

@@ -46,6 +46,7 @@ const store = createStore(rootReducer,
 
 // load initial timetable from user data if logged in or local storage
 const setupTimetables = (userTimetables, allSemesters, oldSemesters) => (dispatch) => {
+  dispatch(fetchAdvisingTimetables());
   if (userTimetables.length > 0) {
     const activeTimetable = userTimetables[0];
     dispatch(loadTimetable(activeTimetable));
