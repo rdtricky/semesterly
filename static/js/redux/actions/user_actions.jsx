@@ -35,7 +35,7 @@ import {
   getActiveTimetable,
   getCurrentSemester } from '../reducers/root_reducer';
 import { fetchCourseClassmates } from './modal_actions';
-import { getNumberedName, loadTimetable, nullifyTimetable, fetchAdvisingTimetables } from './timetable_actions';
+import { getNumberedName, loadTimetable, nullifyTimetable, fetchAdvisingTimetables, createNewTimetable } from './timetable_actions';
 import { receiveCourses } from './search_actions';
 import { MAX_TIMETABLE_NAME_LENGTH } from '../constants/constants';
 import * as ActionTypes from '../constants/actionTypes';
@@ -281,16 +281,14 @@ export const deleteAdvisingTimetable = timetable => (dispatch, getState) => {
     .then((json) => {
       if (json.timetables.length > 0) {
         dispatch(fetchAdvisingTimetables());
-        console.log(state.userInfo.data.timetables);
         if (state.userInfo.data.timetables.length > 0) {
           dispatch(loadTimetable(state.userInfo.data.timetables[0]));
         } else {
-          nullifyTimetable(dispatch);
+            //dispatch(nullifyTimetable());
+            dispatch(createNewTimetable());
         }
-        // dispatch(loadTimetable());
       } else {
         console.log('failed delete');
-        // nullifyTimetable(dispatch);
       }
       return json;
     });
