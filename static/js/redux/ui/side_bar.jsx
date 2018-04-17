@@ -19,6 +19,7 @@ import ClickOutHandler from 'react-onclickout';
 import uniqBy from 'lodash/uniqBy';
 import flatMap from 'lodash/flatMap';
 import MasterSlot from './master_slot';
+import Comment from './comment';
 import TimetableNameInputContainer from './containers/timetable_name_input_container';
 import CreditTickerContainer from './containers/credit_ticker_container';
 import Textbook from './textbook';
@@ -95,6 +96,18 @@ class SideBar extends React.Component {
           fetchCourseInfo={() => this.props.fetchCourseInfo(course.id)}
           removeCourse={() => this.props.removeCourse(course.id)}
           getShareLink={this.props.getShareLink}
+        />);
+      }) : null;
+    let comments = this.props.mandatoryCourses ?
+      this.props.mandatoryCourses.map((course) => {
+        const colourIndex = (course.id in this.props.courseToColourIndex) ?
+          this.props.courseToColourIndex[course.id] :
+          getNextAvailableColour(this.props.courseToColourIndex);
+        return (<Comment
+          key={course.id}
+          colourIndex={colourIndex}
+          writer='Alex Hecksher'
+          date='4/17/18'
         />);
       }) : null;
 
@@ -209,12 +222,12 @@ class SideBar extends React.Component {
         { optionalSlots }
         <div id="sb-optional-slots" />
         <a onClick={this.props.launchTextbookModal}>
-          <h4 className="sb-header"> Textbooks
+          <h4 className="sb-header"> Comments
             <div className="sb-header-link"><i className="fa fa-external-link" />&nbsp;See all</div>
           </h4>
         </a>
         <div className="side-bar-section">
-          <TextbookList courses={this.props.coursesInTimetable} />
+          { comments }
         </div>
       </div>
     );
