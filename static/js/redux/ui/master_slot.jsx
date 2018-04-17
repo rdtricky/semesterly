@@ -231,4 +231,3 @@ ShareLink.propTypes = {
 };
 
 export default MasterSlot;
-
