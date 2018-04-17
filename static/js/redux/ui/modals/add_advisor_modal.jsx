@@ -65,6 +65,7 @@ class AddAdvisorModal extends React.Component {
 
   endSearch() {
     this.state.isLoading = false;
+<<<<<<< HEAD
     if (this.props.data.advisors_added) {
       if (this.props.data.advisors_added.length > 0) {
         this.state.advisor = this.props.data.advisors_added[0];
@@ -72,6 +73,14 @@ class AddAdvisorModal extends React.Component {
       } else {
         this.state.result = 'Advisor was not found';
       }
+=======
+
+    if (!this.props.data.advisors_added) {
+      this.state.result = this.props.data.reason || 'Please enter valid email';
+    } else if (this.props.data.advisors_added.length > 0) {
+      this.state.advisor = this.props.data.advisors_added[0];
+      this.state.result = `${this.state.advisor.userFirstName} ${this.state.advisor.userLastName} is now an advisor to your timetable`;
+>>>>>>> 91cc3d939c44c12924b4e27839a667c64a52517f
     } else {
       this.state.result = this.props.data.reason === undefined ? 'Please enter valid email' : this.props.data.reason;
     }
@@ -112,29 +121,34 @@ class AddAdvisorModal extends React.Component {
     const modalContent = (this.props.hasCourses) ? (
       <div className="add-advisor-modal__container">
         <div className="search-bar__input-wrapper">
-        <input
-          ref={(c) => { this.input = c; }}
-          placeholder={'Search for an Advisor'}
-          value={this.state.input}
-          className={this.state.isLoading ? 'results-loading-gif' : ''}
-          onInput={e => this.setState({ input: e.target.value })}
-        />
-        <button
-          className="btn btn-primary"
-          style={{ marginLeft: 'auto', marginRight: '10%' }}
-          onClick={() => this.startSearch()}
-        >
+          <input
+            ref={(c) => { this.input = c; }}
+            placeholder={'Search for an Advisor'}
+            value={this.state.input}
+            className={this.state.isLoading ? 'results-loading-gif' : ''}
+            onInput={e => this.setState({ input: e.target.value })}
+          />
+          <button
+            className="btn btn-primary"
+            style={{ marginLeft: 'auto', marginRight: '10%' }}
+            onClick={() => this.startSearch()}
+          >
           Search
+<<<<<<< HEAD
         </button>
         <p>{ this.state.result }</p>
           { existingAdvisors }
+=======
+          </button>
+          <p>{ this.state.result }</p>
+>>>>>>> 91cc3d939c44c12924b4e27839a667c64a52517f
         </div>
       </div>
-    ) : <div className="add-advisor-modal__container">
+    ) : (<div className="add-advisor-modal__container">
       <div className="search-bar__input-wrapper">
         <p> Please add to your timetable before adding an advisor </p>
       </div>
-    </div>;
+    </div>);
     return (
       <Modal
         ref={(c) => { this.modal = c; }}
