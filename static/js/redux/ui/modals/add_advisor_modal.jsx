@@ -48,6 +48,7 @@ class AddAdvisorModal extends React.Component {
     if (this.props.isVisible) {
       this.modal.show();
     }
+    this.props.fetchAdvisorListLink();
   }
 
   hide() {
@@ -95,6 +96,17 @@ class AddAdvisorModal extends React.Component {
     if (this.props.data !== '' && this.state.isLoading) {
       this.endSearch();
     }
+    const existingAdvisors = (
+      <div className="existing-advisors">
+        <h3> Existing Advisors </h3>
+        <div className="advisor-card">
+          <div
+            className="social-pro-pic"
+            style={{backgroundImage: 'url(https://lh6.googleusercontent.com/-iqNXPUCvgTk/AAAAAAAAAAI/AAAAAAAAAIU/IMUYG8om_Y4/photo.jpg?sz=50)', margin: '5px', zIndex: '2' }}
+          />
+          <p> Kristin Yim - k.yim33@gmail.com </p>
+        </div>
+      </div>);
     const modalContent = (this.props.hasCourses) ? (
       <div className="add-advisor-modal__container">
         <div className="search-bar__input-wrapper">
@@ -111,8 +123,14 @@ class AddAdvisorModal extends React.Component {
             onClick={() => this.startSearch()}
           >
           Search
+<<<<<<< HEAD
+        </button>
+        <p>{ this.state.result }</p>
+          { existingAdvisors }
+=======
           </button>
           <p>{ this.state.result }</p>
+>>>>>>> 91cc3d939c44c12924b4e27839a667c64a52517f
         </div>
       </div>
     ) : (<div className="add-advisor-modal__container">
