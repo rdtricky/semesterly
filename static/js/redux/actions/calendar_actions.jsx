@@ -21,6 +21,7 @@ import {
     getRequestShareTimetableLinkEndpoint,
     getCourseShareLink,
     getAddAdvisorEndpoint,
+    getAdvisorEndpoint,
 } from '../constants/endpoints';
 import { FULL_WEEK_LIST } from '../constants/constants';
 import {
@@ -119,6 +120,35 @@ export const fetchAdvisorLink = email => (dispatch, getState) => {
           type: ActionTypes.SEND_ADVISOR_DATA,
           data,
         });
+      });
+};
+export const fetchAdivsorListLink = () => (dispatch, getState) => {
+  const state = getState();
+  const timetableId = getActiveTimetable(state).id;
+
+  const semester = getCurrentSemester(state);
+
+  fetch(getAdvisorEndpoint(), {
+      headers: {
+          'X-CSRFToken': Cookie.get('csrftoken'),
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+      },
+      method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+          tt_id: timetableId,
+          sem_name: semester.name,
+          sem_year: semester.year,
+      }),
+  })
+      .then(response => response.json())
+        .then((data) => {
+            /*dispatch({
+                type: ActionTypes.SEND_ADVISOR_DATA,
+                data,
+            });*/
+           console.log(data);
       });
 };
 

@@ -141,6 +141,7 @@ AddAdvisorModal.propTypes = {
   hideAddAdvisorModal: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
   fetchAdvisorLink: PropTypes.func.isRequired,
+  fetchAdvisorListLink: PropTypes.func.isRequired,
 };
 
 export default AddAdvisorModal;

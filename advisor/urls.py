@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^advisor/getAdvisingTimetables/$', advisor.views.AdvisorView.as_view()),
     url(r'^advisor/deleteAdvisor/(?P<sem_name>.+)/(?P<year>[0-9]{4})/(?P<tt_name>.+)/(?P<student_email>.+)/$',
                                advisor.views.AdvisorView.as_view()),
+    url(r'^advisor/getAdvisor/$', advisor.views.RetrieveAdvisorView.as_view()),
 )
