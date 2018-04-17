@@ -144,11 +144,10 @@ export const fetchAdvisorListLink = () => (dispatch, getState) => {
   })
       .then(response => response.json())
         .then((data) => {
-            /*dispatch({
-                type: ActionTypes.SEND_ADVISOR_DATA,
+            dispatch({
+                type: ActionTypes.SET_ADVISOR_LIST,
                 data,
-            });*/
-           console.log(data);
+            });
       });
 };
 

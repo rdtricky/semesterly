@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
   return {
     isVisible: state.addAdvisorModal.isVisible,
     data: state.addAdvisorModal.data,
+    existingAdvisors: state.addAdvisorModal.existingAdvisors,
     currentTimetableName: state.savingTimetable.activeTimetable.name,
     hasCourses: slots.length > 0,
   };
