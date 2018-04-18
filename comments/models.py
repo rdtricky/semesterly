@@ -9,3 +9,8 @@ class Comment(models.Model):
    message = models.TextField()
    owner = models.ForeignKey(User)
    last_updated = models.DateTimeField(auto_now=True)
+
+   @classmethod
+   def create(cls, message, owner):
+       comment = cls(message=message, owner=owner)
+       return comment

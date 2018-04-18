@@ -9,10 +9,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from timetable.models import Semester
 from django.contrib.auth.models import User
-from comment.models import Comment
+from comments.models import Comment
 from helpers.mixins import ValidateSubdomainMixin, RedirectToSignupMixin
 from helpers.decorators import validate_subdomain
-
+from comments.serializers import CommentSerializer
 
 class CommentView(APIView):
     def get(self, request, sem_name, sem_year, tt_id ):
@@ -21,10 +21,14 @@ class CommentView(APIView):
             student = Student.objects.get(user=request.user)
             timetable = student.personaltimetable_set.filter(
                      school=request.subdomain, semester=sem, pk=tt_id)
-            commments = timetable.comments.all()
-            return Response({'comments', comments}, status=200)
+
+            tt_commments = timetable.comments.all()
+            comments = []
+            for comment in tt_comments:
+                comments.append(comment)
+            return Response({'comments': comments}, status=200)
         except:
-            return Response({'?', []}, status=404)
+            return Response({'reason': 'unknown tbh', 'comments': []}, status=404)
 
     def post(self, request):
         try:
@@ -32,16 +36,20 @@ class CommentView(APIView):
             sem_name = request.data['sem_name']
             sem_year = request.data['sem_year']
             comment_str = request.data['comment_str']
+            sem, _ = Semester.objects.get_or_create(name=sem_name, year=sem_year)
 
             owner = get_student(request)
-            tt = PersonalTimetable.objects.filter(student=student, pk=tt_id, school=school, semester=semester)
-            comment = Comment(comment_str)
+            # REMEBER YOU WILL NEED TO CHANGE student=owner FOR WHEN ADVISORS CAN COMMENT ON TT's!!
+            tt = PersonalTimetable.objects.get(student=owner, pk=tt_id, school=request.subdomain, semester=sem)
+            comment = Comment.create(message=comment_str, owner=owner.user)
+            comment.save()
             tt.comments.add(comment)
-            return Response({'comment_added', comment}, status=200)
-        except:
-            return Response({'?', []}, status=404)
+            return Response({'comment_added': CommentSerializer(comment).data}, status=200)
 
+        except KeyError:
+            return Response({'reason': 'unknown tbh', 'comment_added': [] }, status=404)
 
+"""
     def put(self, request):
 
-    def delete(self, request):
+    def delete(self, request):"""

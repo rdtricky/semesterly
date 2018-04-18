@@ -510,8 +510,8 @@ export const addComment = content => (dispatch, getState) => {
     credentials: 'include',
     body: JSON.stringify({
       sem_name: getCurrentSemester(state).name,
-      year: getCurrentSemester(state).year,
-      tt_name: state.timetables.items[0].name,
+      sem_year: getCurrentSemester(state).year,
+      tt_id: state.timetables.items[0].id,
       comment_str: content,
     }),
   })
