@@ -122,7 +122,7 @@ export const fetchAdvisorLink = email => (dispatch, getState) => {
         });
       });
 };
-export const fetchAdivsorListLink = () => (dispatch, getState) => {
+export const fetchAdvisorListLink = () => (dispatch, getState) => {
   const state = getState();
   const timetableId = getActiveTimetable(state).id;
 
@@ -144,11 +144,10 @@ export const fetchAdivsorListLink = () => (dispatch, getState) => {
   })
       .then(response => response.json())
         .then((data) => {
-            /*dispatch({
-                type: ActionTypes.SEND_ADVISOR_DATA,
+            dispatch({
+                type: ActionTypes.SET_ADVISOR_LIST,
                 data,
-            });*/
-           console.log(data);
+            });
       });
 };
 

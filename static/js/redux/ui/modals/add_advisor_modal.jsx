@@ -36,6 +36,7 @@ class AddAdvisorModal extends React.Component {
         this.startSearch();
       }
     });
+    this.props.fetchAdvisorListLink();
   }
 
   componentDidMount() {
@@ -47,6 +48,7 @@ class AddAdvisorModal extends React.Component {
   componentDidUpdate() {
     if (this.props.isVisible) {
       this.modal.show();
+      this.props.fetchAdvisorListLink();
     }
   }
 
@@ -95,6 +97,15 @@ class AddAdvisorModal extends React.Component {
     if (this.props.data !== '' && this.state.isLoading) {
       this.endSearch();
     }
+    const existingAdvisors = this.props.existingAdvisors ? this.props.existingAdvisors.advisors_existing.map((advisor) => (
+      <div className="advisor-card" key={advisor}>
+        <div
+          className="social-pro-pic"
+          style={{backgroundImage: advisor.image_url, margin: '5px', zIndex: '2' }}
+        />
+        <p> {advisor.userFirstName} {advisor.userLastName} - {advisor.email} </p>
+      </div>
+    )) : null;
     const modalContent = (this.props.hasCourses) ? (
       <div className="add-advisor-modal__container">
         <div className="search-bar__input-wrapper">
@@ -111,8 +122,12 @@ class AddAdvisorModal extends React.Component {
             onClick={() => this.startSearch()}
           >
           Search
-          </button>
-          <p>{ this.state.result }</p>
+        </button>
+        <p>{ this.state.result }</p>
+          <div className="existing-advisors">
+            <h3> Existing Advisors </h3>
+            { existingAdvisors }
+          </div>
         </div>
       </div>
     ) : (<div className="add-advisor-modal__container">

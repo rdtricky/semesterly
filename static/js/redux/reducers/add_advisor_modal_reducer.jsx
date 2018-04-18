@@ -17,6 +17,7 @@ import * as ActionTypes from '../constants/actionTypes';
 const addAdvisorModal = (state = {
   isVisible: false,
   data: '',
+  existingAdvisors: null,
 }, action) => {
   switch (action.type) {
     case ActionTypes.TRIGGER_ADD_ADVISOR_MODAL:
@@ -32,6 +33,8 @@ const addAdvisorModal = (state = {
       return Object.assign({}, state, { isFetching: true });
     case ActionTypes.RECEIVE_ADVISING_TIMETABLES:
       return Object.assign({}, state, { advisingTimetables: action.timetables, isFetching: false });
+    case ActionTypes.SET_ADVISOR_LIST:
+      return Object.assign({}, state, { existingAdvisors: action.data });
     default:
       return state;
   }

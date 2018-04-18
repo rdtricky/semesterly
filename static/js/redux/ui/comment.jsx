@@ -21,37 +21,13 @@ import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 // import Clipboard from 'clipboard';
 
 class Comment extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      input: '',
-      content: '',
-    };
-    this.setContent = this.setContent.bind(this);
-  }
-  componentWillMount() {
-    $(document.body).on('keydown', (e) => {
-      if (e.key === 'Enter' && this.state.input.length > 0) {
-        this.setContent();
-      }
-    });
-  }
-  setContent() {
-    this.setState({ content: this.state.input });
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
-    const commentContent = (this.state.content === '') ? (
+    const commentContent = (
       <div className="comment-content">
-          <input
-            ref={(c) => { this.input = c; }}
-            placeholder={'Add Comment'}
-            value={this.state.input}
-            onInput={e => this.setState({ input: e.target.value })}
-          />
-      </div>
-    ) : (
-      <div className="comment-content">
-        <h3>{ this.state.content }</h3>
+        <h3>{ this.prop.content }</h3>
       </div>
     )
     const profilePic = (
@@ -62,27 +38,28 @@ class Comment extends React.Component {
     )
     const commentData = (this.state.content === '') ? null : (
       <div className="comment-user-data">
-        <h4>{ profilePic } { this.props.writer } { this.props.date }</h4>
+        <h4>{ profilePic }</h4>
+        <h2>{ this.props.writer }<br/> {this.props.date}</h2>
       </div>
     )
     return (<div
       className="comment-slot"
-      // style={{ backgroundColor: COLOUR_DATA[this.props.colourIndex].background }}
     >
-      { commentContent }
       { commentData }
+      { commentContent }
     </div>);
   }
 }
 
 Comment.defaultProps = {
+  content: null,
   writer: null,
   slots: null,
   date: null,
 };
 
 Comment.propTypes = {
-  colourIndex: PropTypes.number.isRequired,
+  content: PropTypes.string,
   writer: PropTypes.string,
   date: PropTypes.string,
 };
