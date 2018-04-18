@@ -39,6 +39,7 @@ urlpatterns = patterns('',
                        url('', include('analytics.urls')),
                        url('', include('agreement.urls')),
                        url('', include('advisor.urls')),
+                       url('', include('comments.urls')),
 
                        # Automatic deployment endpoint
                        url(r'deploy_staging/', 'semesterly.views.deploy_staging'),
