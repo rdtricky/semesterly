@@ -7,5 +7,5 @@ from django.contrib.auth.models import User
 class Comment(models.Model):
    """A db object representing comments made on a timetable. """
    message = models.TextField()
-   owner = models.ForeignKey(Student)
+   owner = models.ForeignKey(User)
    last_updated = models.DateTimeField(auto_now=True)

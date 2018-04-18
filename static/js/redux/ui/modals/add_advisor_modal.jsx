@@ -48,8 +48,8 @@ class AddAdvisorModal extends React.Component {
   componentDidUpdate() {
     if (this.props.isVisible) {
       this.modal.show();
+      this.props.fetchAdvisorListLink();
     }
-    this.props.fetchAdvisorListLink();
   }
 
   hide() {

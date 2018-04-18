@@ -14,12 +14,13 @@ GNU General Public License for more details.
 
 import fetch from 'isomorphic-fetch';
 import Cookie from 'js-cookie';
+import Comment from '../ui/comment';
 import {
   getActiveTimetable,
   getActiveTimetableCourses,
   getCurrentSemester,
   getDenormTimetable } from '../reducers/root_reducer';
-import { getTimetablesEndpoint, getAdvisingTimetablesEndpoint } from '../constants/endpoints';
+import { getTimetablesEndpoint, getAdvisingTimetablesEndpoint, addCommentEndpoint } from '../constants/endpoints';
 import {
     browserSupportsLocalStorage,
     generateCustomEventId,
@@ -494,6 +495,28 @@ export const fetchAdvisingTimetables = () => (dispatch, getState) => {
         timetables,
       });
     });
+};
+
+export const addComment = content => (dispatch, getState) => {
+  const state = getState();
+  console.log(state);
+  fetch(addCommentEndpoint(), {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({
+      sem_name: getCurrentSemester(state).name,
+      year: getCurrentSemester(state).year,
+      tt_name: state.timetables.items[0].name,
+      comment_str: content,
+    }),
+  })
+    .then(response => response.json())
+    .then((json) => console.log(json));
 };
 
 export const toggleConflicts = () => ({ type: ActionTypes.TOGGLE_CONFLICTS });

@@ -30,6 +30,7 @@ import {
     addOrRemoveCourse,
     addOrRemoveOptionalCourse,
     loadTimetable,
+    addComment,
 } from '../../actions/timetable_actions';
 import { deleteTimetable, duplicateTimetable, deleteAdvisingTimetable } from '../../actions/user_actions';
 import { getCourseShareLink } from '../../constants/endpoints';
@@ -72,6 +73,7 @@ const SideBarContainer = connect(
     deleteAdvisingTimetable,
     launchFinalExamsModal: showFinalExamsModal,
     loadTimetable,
+    addComment,
   },
 )(SideBar);
 

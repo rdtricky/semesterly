@@ -19,7 +19,6 @@ import ClickOutHandler from 'react-onclickout';
 import uniqBy from 'lodash/uniqBy';
 import flatMap from 'lodash/flatMap';
 import MasterSlot from './master_slot';
-import Comment from './comment';
 import TimetableNameInputContainer from './containers/timetable_name_input_container';
 import CreditTickerContainer from './containers/credit_ticker_container';
 import Textbook from './textbook';
@@ -30,9 +29,23 @@ import { getTextbooksFromCourse } from '../reducers/entities_reducer';
 class SideBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showDropdown: false };
+    this.state = {
+      showDropdown: false,
+      input: '',
+      content: '',
+    };
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.hideDropdown = this.hideDropdown.bind(this);
+  }
+
+  componentWillMount() {
+    $(document.body).on('keydown', (e) => {
+      if (e.key === 'Enter' && this.state.input.length > 0) {
+        this.setState({ content: this.state.input });
+        this.props.addComment(this.state.content);
+        this.setState({ input: '', content: '' });
+      }
+    });
   }
 
   hideDropdown() {
@@ -98,19 +111,18 @@ class SideBar extends React.Component {
           getShareLink={this.props.getShareLink}
         />);
       }) : null;
-    let comments = this.props.mandatoryCourses ?
-      this.props.mandatoryCourses.map((course) => {
-        const colourIndex = (course.id in this.props.courseToColourIndex) ?
-          this.props.courseToColourIndex[course.id] :
-          getNextAvailableColour(this.props.courseToColourIndex);
-        return (<Comment
-          key={course.id}
-          colourIndex={colourIndex}
-          writer='Alex Hecksher'
-          date='4/17/18'
-        />);
-      }) : null;
-
+    const comments = (
+      <div className="comment-slot">
+      <div className="comment-content">
+      <input
+        ref={(c) => { this.input = c; }}
+        placeholder={'Add Comment'}
+        value={this.state.input}
+        onInput={e => this.setState({ input: e.target.value })}
+      />
+      </div>
+      </div>
+    );
     let optionalSlots = this.props.coursesInTimetable ? this.props.optionalCourses.map((course) => {
       const colourIndex = (course.id in this.props.courseToColourIndex) ?
           this.props.courseToColourIndex[course.id] :
@@ -272,6 +284,7 @@ SideBar.propTypes = {
   examSupportedSemesters: PropTypes.arrayOf(PropTypes.number).isRequired,
   hasLoaded: PropTypes.bool.isRequired,
   getShareLink: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired,
 };
 
 export default SideBar;
