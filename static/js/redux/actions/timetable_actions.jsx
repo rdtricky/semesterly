@@ -504,7 +504,7 @@ export const fetchAdvisingTimetables = () => (dispatch, getState) => {
 
 export const getComment = () => (dispatch, getState) => {
   const state = getState();
-  const timetable = state.timetables.items[0].name;
+  const timetable = state.timetables.items[0].id;
   const email = state.userInfo.data.email;
   fetch(getCommentEndpoint(getCurrentSemester(state), timetable, email), {
     headers: {
